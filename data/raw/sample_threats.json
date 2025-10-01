@@ -1,0 +1,36 @@
+{
+  "phishing_samples": [
+    {
+      "text": "URGENT: Your account will be suspended in 24 hours. Click here to verify: http://fake-bank.com/verify",
+      "label": "phishing",
+      "risk_score": 0.9
+    },
+    {
+      "text": "Congratulations! You've won $1,000,000 in our lottery. Claim now: http://lottery-scam.com",
+      "label": "phishing", 
+      "risk_score": 0.85
+    },
+    {
+      "text": "Your Amazon order has been shipped and will arrive tomorrow. Track your package here.",
+      "label": "safe",
+      "risk_score": 0.1
+    }
+  ],
+  "url_samples": [
+    {
+      "url": "http://192.168.1.1/login",
+      "label": "suspicious",
+      "risk_score": 0.7
+    },
+    {
+      "url": "https://amazon.com/orders",
+      "label": "safe", 
+      "risk_score": 0.05
+    },
+    {
+      "url": "http://bit.ly/suspicious-link",
+      "label": "suspicious",
+      "risk_score": 0.6
+    }
+  ]
+}
