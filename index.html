@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustEye - AI Threat Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #1a252f 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo-icon {
+            width: 220px;
+            height: auto;
+            vertical-align: middle;
+            max-height: 70px;
+            object-fit: contain;
+        }
+        
+        .navbar-brand {
+            margin-left: -80px;
+            padding-left: 0;
+        }
+        
+        .hero-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 1rem;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        .hero-section {
+            background: rgba(44, 62, 80, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 2px solid #7dd3fc;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .scan-btn, .demo-btn {
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .scan-btn {
+            background: linear-gradient(135deg, #7dd3fc, #0ea5e9);
+        }
+        
+        .demo-btn {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+        
+        .scan-btn:hover, .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .risk-indicator {
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .risk-critical {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid #dc2626;
+            color: #dc2626;
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border: 2px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .risk-medium {
+            background: linear-gradient(135deg, #fff7ed, #fef3c7);
+            border: 2px solid #f59e0b;
+            color: #f59e0b;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 2px solid #7dd3fc;
+            color: #0ea5e9;
+        }
+        
+        .risk-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .risk-level {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .threat-badge {
+            background: #f59e0b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0ea5e9;
+        }
+        
+        .sample-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sample-card:hover {
+            background: #e9ecef;
+            border-color: #0ea5e9;
+            transform: translateY(-2px);
+        }
+        
+        .sample-card.active {
+            background: #e0f2fe;
+            border-color: #0ea5e9;
+        }
+        
+        .sample-title {
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sample-preview {
+            font-size: 0.9rem;
+            color: #6c757d;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 3px solid #7dd3fc;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: transparent;">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="display: flex; align-items: center;">
+                <img src="trusteye_logo.png" alt="TrustEye" class="logo-icon">
+                <span style="background: linear-gradient(135deg, #7dd3fc, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.5rem; font-weight: 600; margin-left: -60px;">TrustEye</span>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="#" onclick="showSection('scanner')" style="color: white;">Scanner</a>
+                <a class="nav-link" href="#" onclick="showSection('dashboard')" style="color: white;">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="text-center">
+                <img src="trusteye_logo.png" alt="TrustEye" class="hero-logo mb-3">
+                <p class="hero-subtitle" style="background: linear-gradient(135deg, #7dd3fc, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI-Powered Cybersecurity Threat Detection</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section id="scanner" class="section active container">
+        <div class="main-card p-5">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-shield-alt text-primary me-2"></i>
+                Threat Scanner
+            </h2>
+
+            <!-- Demo Section -->
+            <div class="demo-section">
+                <h5 class="mb-3">
+                    <i class="fas fa-play-circle text-success me-2"></i>
+                    Try Demo Samples
+                </h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="sample-card" id="phishing-card">
+                            <div class="sample-title">🚨 Phishing Email</div>
+                            <div class="sample-preview" id="phishing-preview">Click to load random phishing email...</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="sample-card" id="url-card">
+                            <div class="sample-title">🔗 Suspicious URL</div>
+                            <div class="sample-preview" id="url-preview">Click to load random suspicious URL...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-success demo-btn" onclick="runDemo()">
+                        <i class="fas fa-magic me-2"></i>Run Demo Scan
+                    </button>
+                </div>
+            </div>
+
+            <form id="scanForm">
+                <div class="mb-4">
+                    <label for="textInput" class="form-label">
+                        <i class="fas fa-envelope text-primary"></i> Suspicious Text or Email
+                    </label>
+                    <textarea class="form-control" id="textInput" rows="4" 
+                        placeholder="Paste suspicious email content, SMS message, or any text here..."></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="urlInput" class="form-label">
+                        <i class="fas fa-link text-primary"></i> Suspicious URL
+                    </label>
+                    <input type="url" class="form-control" id="urlInput" 
+                        placeholder="https://suspicious-website.com">
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary scan-btn">
+                        <i class="fas fa-search me-2"></i>Scan with TrustEye
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <div id="results" class="mt-4" style="display: none;">
+                <div id="riskIndicator" class="risk-indicator">
+                    <div id="riskScore" class="risk-score">0%</div>
+                    <div id="riskLevel" class="risk-level">Safe</div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <div id="confidenceValue" class="stat-value">85%</div>
+                            <div class="text-muted">Confidence</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <div id="threatCount" class="stat-value">0</div>
+                            <div class="text-muted">Threats Found</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <div class="stat-value"><i class="fas fa-robot"></i></div>
+                            <div class="text-muted">AI Analysis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="threatsSection" class="mt-4">
+                    <h5><i class="fas fa-exclamation-triangle text-warning"></i> Detected Threats:</h5>
+                    <div id="threatsList"></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-secondary me-2" onclick="clearResults()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <button class="btn btn-primary" onclick="scanAnother()">
+                        <i class="fas fa-redo"></i> Scan Another
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section container">
+        <div class="main-card p-5">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-chart-bar text-primary me-2"></i>
+                TrustEye Analytics Dashboard
+            </h2>
+            
+            <!-- Stats Overview -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white;">
+                        <div class="stat-value" id="totalScans" style="color: white;">0</div>
+                        <div style="color: rgba(255,255,255,0.9);">Total Scans</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white;">
+                        <div class="stat-value" id="threatsDetected" style="color: white;">0</div>
+                        <div style="color: rgba(255,255,255,0.9);">Threats Detected</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white;">
+                        <div class="stat-value" id="avgRiskScore" style="color: white;">0%</div>
+                        <div style="color: rgba(255,255,255,0.9);">Avg Risk Score</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #7dd3fc, #0ea5e9); color: white;">
+                        <div class="stat-value" id="todayScans" style="color: white;">0</div>
+                        <div style="color: rgba(255,255,255,0.9);">Today's Scans</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="stats-card">
+                        <h5 class="text-center mb-3">Risk Level Distribution</h5>
+                        <div class="chart-container">
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="stats-card">
+                        <h5 class="text-center mb-3">Scans Over Time</h5>
+                        <div class="chart-container">
+                            <canvas id="timeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="stats-card">
+                        <h5 class="text-center mb-3">Threat Types Detected</h5>
+                        <div class="chart-container">
+                            <canvas id="threatChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data Management -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-warning me-2" onclick="clearAllData()">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                    <button class="btn btn-info" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="trusteye_logo.png" alt="TrustEye" class="logo-icon mb-2">
+                    <p style="color: white;">AI-Powered Cybersecurity Threat Detection System</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h6>Features</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success"></i> Text Analysis</li>
+                        <li><i class="fas fa-check text-success"></i> URL Scanning</li>
+                        <li><i class="fas fa-check text-success"></i> Data Persistence</li>
+                        <li><i class="fas fa-check text-success"></i> Analytics Dashboard</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data arrays
+        const phishingEmails = [
+            {
+                text: 'URGENT SECURITY ALERT! Your account will be suspended in 24 hours due to suspicious activity. Click here immediately to verify your identity.',
+                url: 'http://secure-bank-verify.fake-domain.com/urgent-login',
+                preview: 'URGENT SECURITY ALERT! Your account will be suspended...'
+            },
+            {
+                text: 'Your PayPal account has been temporarily limited. Please verify your account information immediately.',
+                url: 'http://paypal-security-update.malicious.org/verify-account',
+                preview: 'Your PayPal account has been temporarily limited...'
+            }
+        ];
+
+        const suspiciousUrls = [
+            {
+                text: 'Please update your payment information.',
+                url: 'http://192.168.1.100/paypal-update/login.php',
+                preview: 'IP address with fake PayPal login page...'
+            },
+            {
+                text: 'Verify your identity to continue.',
+                url: 'http://bit.ly/urgent-bank-verify-2024',
+                preview: 'Shortened URL for bank verification...'
+            }
+        ];
+
+        // Dashboard data with persistence
+        let dashboardData = {
+            totalScans: 0,
+            threatsDetected: 0,
+            riskLevels: { Low: 0, Medium: 0, High: 0, Critical: 0 },
+            threatTypes: {},
+            scanHistory: [],
+            todayScans: 0
+        };
+
+        let currentSample = null;
+        let lastPhishingIndex = -1;
+        let lastUrlIndex = -1;
+        let charts = {};
+
+        // Load data from localStorage
+        function loadDashboardData() {
+            const saved = localStorage.getItem('trusteyeDashboard');
+            if (saved) {
+                dashboardData = { ...dashboardData, ...JSON.parse(saved) };
+            }
+            updateDashboardStats();
+        }
+
+        // Save data to localStorage
+        function saveDashboardData() {
+            localStorage.setItem('trusteyeDashboard', JSON.stringify(dashboardData));
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            document.getElementById('totalScans').textContent = dashboardData.totalScans;
+            document.getElementById('threatsDetected').textContent = dashboardData.threatsDetected;
+            
+            const avgRisk = dashboardData.totalScans > 0 ? 
+                Math.round(dashboardData.scanHistory.reduce((sum, scan) => sum + scan.riskScore, 0) / dashboardData.totalScans) : 0;
+            document.getElementById('avgRiskScore').textContent = avgRisk + '%';
+            
+            const today = new Date().toDateString();
+            const todayCount = dashboardData.scanHistory.filter(scan => 
+                new Date(scan.timestamp).toDateString() === today
+            ).length;
+            document.getElementById('todayScans').textContent = todayCount;
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Risk Level Distribution Chart
+            const riskCtx = document.getElementById('riskChart');
+            if (riskCtx) {
+                charts.risk = new Chart(riskCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Low', 'Medium', 'High', 'Critical'],
+                        datasets: [{
+                            data: [1, 1, 1, 1],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#dc2626'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Scans Over Time Chart
+            const timeCtx = document.getElementById('timeChart');
+            if (timeCtx) {
+                charts.time = new Chart(timeCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Scans',
+                            data: [2, 5, 3, 8, 4, 6, 7],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Threat Types Chart
+            const threatCtx = document.getElementById('threatChart');
+            if (threatCtx) {
+                charts.threat = new Chart(threatCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['urgent', 'click here', 'verify', 'suspended', 'IP address'],
+                        datasets: [{
+                            label: 'Detections',
+                            data: [12, 8, 6, 4, 3],
+                            backgroundColor: '#f59e0b',
+                            borderColor: '#d97706',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Update charts with real data
+        function updateCharts() {
+            if (charts.risk) {
+                charts.risk.data.datasets[0].data = [
+                    dashboardData.riskLevels.Low,
+                    dashboardData.riskLevels.Medium,
+                    dashboardData.riskLevels.High,
+                    dashboardData.riskLevels.Critical
+                ];
+                charts.risk.update();
+            }
+
+            if (charts.threat) {
+                const sortedThreats = Object.entries(dashboardData.threatTypes)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 10);
+                
+                charts.threat.data.labels = sortedThreats.map(([threat]) => threat);
+                charts.threat.data.datasets[0].data = sortedThreats.map(([,count]) => count);
+                charts.threat.update();
+            }
+        }
+
+        // Threat analysis function
+        function analyzeThreat(text = "", url = "") {
+            let riskScore = 0.0;
+            let threats = [];
+            
+            if (text) {
+                const textLower = text.toLowerCase();
+                const keywords = ['urgent', 'click here', 'verify', 'suspended', 'winner', 'congratulations'];
+                const found = keywords.filter(kw => textLower.includes(kw));
+                if (found.length > 0) {
+                    riskScore += found.length * 0.15;
+                    threats.push(...found);
+                }
+            }
+            
+            if (url) {
+                if (/\d+\.\d+\.\d+\.\d+/.test(url)) {
+                    riskScore += 0.4;
+                    threats.push('IP address detected');
+                }
+                if (['bit.ly', 'tinyurl', 'goo.gl'].some(domain => url.toLowerCase().includes(domain))) {
+                    riskScore += 0.3;
+                    threats.push('URL shortener detected');
+                }
+            }
+            
+            riskScore = Math.min(0.95, riskScore);
+            
+            return {
+                combined_score: riskScore,
+                risk_level: riskScore > 0.8 ? 'Critical' : riskScore > 0.6 ? 'High' : riskScore > 0.3 ? 'Medium' : 'Low',
+                is_threat: riskScore > 0.5,
+                confidence: 0.85,
+                threat_indicators: [...new Set(threats)]
+            };
+        }
+
+        // Record scan data
+        function recordScan(result) {
+            dashboardData.totalScans++;
+            
+            if (result.is_threat) {
+                dashboardData.threatsDetected++;
+            }
+            
+            dashboardData.riskLevels[result.risk_level]++;
+            
+            result.threat_indicators.forEach(threat => {
+                dashboardData.threatTypes[threat] = (dashboardData.threatTypes[threat] || 0) + 1;
+            });
+            
+            dashboardData.scanHistory.push({
+                timestamp: new Date().toISOString(),
+                riskScore: Math.round(result.combined_score * 100),
+                riskLevel: result.risk_level,
+                isThreat: result.is_threat,
+                threatCount: result.threat_indicators.length
+            });
+            
+            if (dashboardData.scanHistory.length > 100) {
+                dashboardData.scanHistory = dashboardData.scanHistory.slice(-100);
+            }
+            
+            saveDashboardData();
+            updateDashboardStats();
+            updateCharts();
+        }
+
+        // Sample loading functions
+        function getRandomSample(array, lastIndex) {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * array.length);
+            } while (randomIndex === lastIndex && array.length > 1);
+            return { sample: array[randomIndex], index: randomIndex };
+        }
+
+        function loadRandomSample(type) {
+            document.querySelectorAll('.sample-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            let sample, preview;
+            
+            if (type === 'phishing') {
+                const result = getRandomSample(phishingEmails, lastPhishingIndex);
+                sample = result.sample;
+                lastPhishingIndex = result.index;
+                preview = document.getElementById('phishing-preview');
+                document.getElementById('phishing-card').classList.add('active');
+            } else if (type === 'suspicious-url') {
+                const result = getRandomSample(suspiciousUrls, lastUrlIndex);
+                sample = result.sample;
+                lastUrlIndex = result.index;
+                preview = document.getElementById('url-preview');
+                document.getElementById('url-card').classList.add('active');
+            }
+            
+            if (sample && preview) {
+                document.getElementById('textInput').value = sample.text;
+                document.getElementById('urlInput').value = sample.url;
+                preview.textContent = sample.preview;
+                currentSample = type;
+            }
+        }
+
+        // Display results
+        function displayResults(result) {
+            recordScan(result);
+            
+            const results = document.getElementById('results');
+            const riskScore = Math.round(result.combined_score * 100);
+            const riskLevel = result.risk_level.toLowerCase();
+            
+            const riskIndicator = document.getElementById('riskIndicator');
+            riskIndicator.className = `risk-indicator risk-${riskLevel}`;
+            
+            document.getElementById('riskScore').textContent = riskScore + '%';
+            document.getElementById('riskLevel').textContent = result.risk_level;
+            document.getElementById('confidenceValue').textContent = Math.round(result.confidence * 100) + '%';
+            document.getElementById('threatCount').textContent = result.threat_indicators.length;
+            
+            const threatsList = document.getElementById('threatsList');
+            if (result.threat_indicators.length > 0) {
+                threatsList.innerHTML = result.threat_indicators.map(threat => 
+                    `<span class="threat-badge">${threat}</span>`
+                ).join('');
+                document.getElementById('threatsSection').style.display = 'block';
+            } else {
+                document.getElementById('threatsSection').style.display = 'none';
+            }
+            
+            results.style.display = 'block';
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Section navigation
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionName).classList.add('active');
+            
+            if (sectionName === 'dashboard') {
+                setTimeout(() => {
+                    updateCharts();
+                }, 100);
+            }
+        }
+
+        // Demo and form functions
+        function runDemo() {
+            loadRandomSample('phishing');
+            
+            const scanBtn = document.querySelector('.scan-btn');
+            scanBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Running Demo...';
+            scanBtn.disabled = true;
+            
+            setTimeout(() => {
+                const text = document.getElementById('textInput').value.trim();
+                const url = document.getElementById('urlInput').value.trim();
+                const result = analyzeThreat(text, url);
+                displayResults(result);
+                
+                scanBtn.innerHTML = '<i class="fas fa-search me-2"></i>Scan with TrustEye';
+                scanBtn.disabled = false;
+                
+                setTimeout(() => {
+                    alert('🎉 Demo completed! Check the Dashboard to see your data!');
+                }, 1000);
+            }, 2000);
+        }
+
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+        }
+
+        function scanAnother() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('urlInput').value = '';
+            clearResults();
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all scan data?')) {
+                localStorage.removeItem('trusteyeDashboard');
+                dashboardData = {
+                    totalScans: 0,
+                    threatsDetected: 0,
+                    riskLevels: { Low: 0, Medium: 0, High: 0, Critical: 0 },
+                    threatTypes: {},
+                    scanHistory: [],
+                    todayScans: 0
+                };
+                updateDashboardStats();
+                updateCharts();
+                alert('All data cleared!');
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(dashboardData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'trusteye_data.json';
+            link.click();
+        }
+
+        // Event listeners
+        document.getElementById('scanForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const text = document.getElementById('textInput').value.trim();
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!text && !url) {
+                alert('Please enter text or URL to analyze');
+                return;
+            }
+            
+            const scanBtn = document.querySelector('.scan-btn');
+            scanBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
+            scanBtn.disabled = true;
+            
+            setTimeout(() => {
+                const result = analyzeThreat(text, url);
+                displayResults(result);
+                
+                scanBtn.innerHTML = '<i class="fas fa-search me-2"></i>Scan with TrustEye';
+                scanBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('phishing-card').addEventListener('click', () => loadRandomSample('phishing'));
+                document.getElementById('url-card').addEventListener('click', () => loadRandomSample('suspicious-url'));
+                
+                loadRandomSample('phishing');
+                loadDashboardData();
+                
+                setTimeout(() => {
+                    initializeCharts();
+                    updateCharts();
+                }, 500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
