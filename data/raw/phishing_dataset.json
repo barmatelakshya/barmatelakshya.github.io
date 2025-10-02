@@ -1,0 +1,91 @@
+{
+  "phishing_samples": [
+    {
+      "text": "URGENT SECURITY ALERT! Your account will be suspended in 24 hours due to suspicious activity. Click here immediately to verify your identity: http://secure-bank-verification.com/urgent-verify",
+      "label": "phishing",
+      "confidence": 0.95,
+      "features": ["urgent", "suspended", "click here", "verify", "suspicious URL"]
+    },
+    {
+      "text": "Congratulations! You've won $1,000,000 in our international lottery! Claim your prize now by clicking this link and providing your bank details.",
+      "label": "phishing", 
+      "confidence": 0.92,
+      "features": ["congratulations", "won money", "claim", "bank details"]
+    },
+    {
+      "text": "Your PayPal account has been limited due to unusual activity. Please verify your account immediately to avoid permanent suspension.",
+      "label": "phishing",
+      "confidence": 0.88,
+      "features": ["limited", "unusual activity", "verify", "suspension"]
+    },
+    {
+      "text": "FINAL NOTICE: Your subscription expires today! Act now to avoid service interruption. Update your payment method here.",
+      "label": "phishing",
+      "confidence": 0.85,
+      "features": ["final notice", "expires", "act now", "update payment"]
+    },
+    {
+      "text": "Security Alert: We detected a login attempt from an unknown device. If this wasn't you, click here to secure your account immediately.",
+      "label": "phishing",
+      "confidence": 0.82,
+      "features": ["security alert", "unknown device", "click here", "immediately"]
+    }
+  ],
+  "legitimate_samples": [
+    {
+      "text": "Thank you for your recent purchase from Amazon. Your order #123456789 has been shipped and will arrive within 2-3 business days. Track your package in your account.",
+      "label": "legitimate",
+      "confidence": 0.05,
+      "features": ["order confirmation", "tracking", "business days"]
+    },
+    {
+      "text": "Your monthly bank statement is now available. You can view it by logging into your online banking account or visiting any of our branch locations.",
+      "label": "legitimate",
+      "confidence": 0.08,
+      "features": ["monthly statement", "online banking", "branch locations"]
+    },
+    {
+      "text": "Reminder: Your appointment with Dr. Smith is scheduled for tomorrow at 2:00 PM. Please arrive 15 minutes early for check-in.",
+      "label": "legitimate",
+      "confidence": 0.02,
+      "features": ["appointment reminder", "specific time", "check-in"]
+    },
+    {
+      "text": "Your Netflix subscription will renew on March 15th for $12.99. You can manage your subscription settings in your account preferences.",
+      "label": "legitimate",
+      "confidence": 0.06,
+      "features": ["subscription renewal", "specific date", "account preferences"]
+    },
+    {
+      "text": "Welcome to our newsletter! Here are this week's top technology news and updates from our editorial team.",
+      "label": "legitimate",
+      "confidence": 0.03,
+      "features": ["newsletter", "technology news", "editorial team"]
+    }
+  ],
+  "test_cases": [
+    {
+      "text": "Your account security needs immediate attention! Verify now to prevent unauthorized access.",
+      "expected_label": "phishing",
+      "expected_confidence": "> 0.7"
+    },
+    {
+      "text": "Thank you for contacting customer support. Your ticket #12345 has been created and will be reviewed within 24 hours.",
+      "expected_label": "legitimate", 
+      "expected_confidence": "< 0.3"
+    },
+    {
+      "text": "WINNER! You've been selected for our exclusive promotion. Click to claim your $500 gift card before it expires!",
+      "expected_label": "phishing",
+      "expected_confidence": "> 0.8"
+    }
+  ],
+  "metadata": {
+    "total_samples": 10,
+    "phishing_count": 5,
+    "legitimate_count": 5,
+    "test_cases": 3,
+    "created_date": "2025-10-01",
+    "version": "1.0"
+  }
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustEye - AI Threat Detection</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">👁️</span>
+                <span class="logo-text">TrustEye</span>
+            </div>
+            <nav class="nav">
+                <a href="#scan" class="nav-link">Scan</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#api" class="nav-link">API</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">AI-Powered Threat Detection</h1>
+            <p class="hero-subtitle">Protect yourself from phishing attacks with advanced machine learning</p>
+        </div>
+    </section>
+
+    <!-- Main Scanner -->
+    <section id="scan" class="scanner">
+        <div class="container">
+            <div class="scanner-card">
+                <h2 class="scanner-title">Scan for Threats</h2>
+                <p class="scanner-description">Enter suspicious text or URLs to analyze potential phishing threats</p>
+                
+                <form id="scanForm" class="scan-form">
+                    <!-- Text Input -->
+                    <div class="input-group">
+                        <label for="textInput" class="input-label">
+                            <span class="label-icon">📧</span>
+                            Suspicious Text or Email
+                        </label>
+                        <textarea 
+                            id="textInput" 
+                            class="text-input" 
+                            placeholder="Paste suspicious email content, SMS message, or any text here..."
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <!-- URL Input -->
+                    <div class="input-group">
+                        <label for="urlInput" class="input-label">
+                            <span class="label-icon">🔗</span>
+                            Suspicious URL
+                        </label>
+                        <input 
+                            type="url" 
+                            id="urlInput" 
+                            class="url-input" 
+                            placeholder="https://suspicious-website.com"
+                        >
+                    </div>
+
+                    <!-- Quick Examples -->
+                    <div class="examples">
+                        <span class="examples-label">Quick Examples:</span>
+                        <div class="example-buttons">
+                            <button type="button" class="example-btn" onclick="loadExample('phishing')">
+                                🚨 Phishing Email
+                            </button>
+                            <button type="button" class="example-btn" onclick="loadExample('suspicious-url')">
+                                🔗 Suspicious URL
+                            </button>
+                            <button type="button" class="example-btn" onclick="loadExample('safe')">
+                                ✅ Safe Content
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scan Button -->
+                    <button type="submit" class="scan-btn" id="scanBtn">
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-text">Scan with TrustEye</span>
+                    </button>
+                </form>
+
+                <!-- Results Section -->
+                <div id="results" class="results hidden">
+                    <div class="results-header">
+                        <h3 id="resultsTitle" class="results-title"></h3>
+                        <div id="riskBadge" class="risk-badge"></div>
+                    </div>
+
+                    <!-- Risk Score -->
+                    <div class="risk-score">
+                        <div class="score-circle">
+                            <div id="scoreValue" class="score-value">0%</div>
+                            <div class="score-label">Risk Score</div>
+                        </div>
+                        <div class="score-details">
+                            <div class="score-item">
+                                <span class="score-item-label">Risk Level:</span>
+                                <span id="riskLevel" class="score-item-value">Low</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-item-label">Confidence:</span>
+                                <span id="confidence" class="score-item-value">85%</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-item-label">Analysis Time:</span>
+                                <span id="analysisTime" class="score-item-value">0.5s</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threat Indicators -->
+                    <div id="threatIndicators" class="threat-indicators">
+                        <h4 class="indicators-title">Detected Threats</h4>
+                        <div id="indicatorsList" class="indicators-list"></div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="explanation">
+                        <h4 class="explanation-title">Analysis Explanation</h4>
+                        <p id="explanationText" class="explanation-text"></p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button class="action-btn secondary" onclick="clearResults()">
+                            Clear Results
+                        </button>
+                        <button class="action-btn primary" onclick="scanAnother()">
+                            Scan Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="features-title">Why Choose TrustEye?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered</h3>
+                    <p class="feature-description">Advanced machine learning algorithms detect sophisticated phishing attempts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-Time</h3>
+                    <p class="feature-description">Instant analysis with results in under 2 seconds</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Comprehensive</h3>
+                    <p class="feature-description">Analyzes both text content and URL patterns for complete protection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">👁️</span>
+                    <span class="logo-text">TrustEye</span>
+                </div>
+                <p class="footer-text">SIH PS1 - Cybersecurity Threat Detection System</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

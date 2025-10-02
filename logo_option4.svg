@@ -1,0 +1,8 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Option 4: Geometric Abstract -->
+  <polygon points="25,35 55,35 50,50 55,65 25,65 30,50" fill="#f59e0b"/>
+  <circle cx="40" cy="50" r="6" fill="#ffffff"/>
+  
+  <text x="70" y="48" font-family="Poppins, sans-serif" font-size="28" font-weight="600" fill="#111827">TrustEye</text>
+  <text x="70" y="64" font-family="Poppins, sans-serif" font-size="9" fill="#9ca3af">INTELLIGENT SECURITY</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Brutalist shapes -->
+  <rect x="20" y="30" width="40" height="40" fill="#000000"/>
+  <rect x="25" y="35" width="30" height="30" fill="#ffffff"/>
+  <circle cx="40" cy="50" r="8" fill="#000000"/>
+  <rect x="37" y="47" width="6" height="6" fill="#ffffff"/>
+  
+  <!-- Bold typography -->
+  <text x="70" y="48" font-family="Arial Black, sans-serif" font-size="28" font-weight="900" fill="#000000">TRUSTEYE</text>
+  <text x="70" y="64" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#000000">DIGITAL GUARDIAN</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="morph" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="50%" style="stop-color:#764ba2"/>
+      <stop offset="100%" style="stop-color:#f093fb"/>
+    </linearGradient>
+    <radialGradient id="morphRadial">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#667eea"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Morphing blob -->
+  <path d="M20 50 Q30 30 50 35 Q60 40 55 55 Q50 70 30 65 Q15 60 20 50 Z" fill="url(#morph)"/>
+  <circle cx="40" cy="50" r="6" fill="url(#morphRadial)"/>
+  
+  <!-- Variable font -->
+  <text x="70" y="48" font-family="Inter Variable, system-ui, sans-serif" font-size="26" font-weight="300" fill="#1a1a1a">TrustEye</text>
+  <text x="70" y="64" font-family="Inter Variable, system-ui, sans-serif" font-size="9" font-weight="600" fill="url(#morph)">ADAPTIVE AI</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.25"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.1"/>
+    </linearGradient>
+    <filter id="blur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+    </filter>
+  </defs>
+  
+  <!-- Glassmorphism background -->
+  <rect x="15" y="25" width="50" height="50" rx="25" fill="url(#glass)" stroke="rgba(255,255,255,0.3)" stroke-width="1" filter="url(#blur)"/>
+  
+  <!-- Modern eye -->
+  <circle cx="40" cy="50" r="12" fill="none" stroke="#6366f1" stroke-width="2"/>
+  <circle cx="40" cy="50" r="4" fill="#6366f1"/>
+  
+  <!-- Ultra-modern typography -->
+  <text x="75" y="42" font-family="SF Pro Display, system-ui, sans-serif" font-size="26" font-weight="200" fill="#1f2937">trust</text>
+  <text x="135" y="42" font-family="SF Pro Display, system-ui, sans-serif" font-size="26" font-weight="800" fill="#6366f1">eye</text>
+  <text x="75" y="58" font-family="SF Pro Display, system-ui, sans-serif" font-size="8" font-weight="500" fill="#9ca3af" letter-spacing="2px">AI VISION</text>
+</svg>

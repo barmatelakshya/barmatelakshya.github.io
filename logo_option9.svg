@@ -1,0 +1,23 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="holo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff006e"/>
+      <stop offset="25%" style="stop-color:#8338ec"/>
+      <stop offset="50%" style="stop-color:#3a86ff"/>
+      <stop offset="75%" style="stop-color:#06ffa5"/>
+      <stop offset="100%" style="stop-color:#ffbe0b"/>
+    </linearGradient>
+    <filter id="hologram">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- Holographic eye -->
+  <circle cx="40" cy="50" r="18" fill="none" stroke="url(#holo)" stroke-width="3" filter="url(#hologram)"/>
+  <circle cx="40" cy="50" r="8" fill="url(#holo)" opacity="0.8"/>
+  
+  <!-- Futuristic text -->
+  <text x="70" y="45" font-family="Helvetica Neue, sans-serif" font-size="24" font-weight="100" fill="url(#holo)">Trust</text>
+  <text x="125" y="45" font-family="Helvetica Neue, sans-serif" font-size="24" font-weight="900" fill="url(#holo)">Eye</text>
+  <text x="70" y="60" font-family="Helvetica Neue, sans-serif" font-size="8" fill="url(#holo)">QUANTUM AI</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iso1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="iso2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 3D Isometric cube -->
+  <path d="M25 45 L40 35 L55 45 L55 60 L40 70 L25 60 Z" fill="url(#iso1)"/>
+  <path d="M40 35 L55 45 L55 60 L40 50 Z" fill="url(#iso2)"/>
+  <circle cx="40" cy="50" r="6" fill="#ffffff"/>
+  <circle cx="40" cy="50" r="3" fill="#1e293b"/>
+  
+  <!-- Modern sans -->
+  <text x="70" y="48" font-family="Poppins, system-ui, sans-serif" font-size="25" font-weight="600" fill="#1e293b">TrustEye</text>
+  <text x="70" y="64" font-family="Poppins, system-ui, sans-serif" font-size="9" font-weight="400" fill="#64748b">3D SECURITY</text>
+</svg>

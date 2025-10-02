@@ -1,0 +1,9 @@
+<svg width="250" height="100" viewBox="0 0 250 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Option 3: Shield Security -->
+  <path d="M40 25 L55 30 L55 50 Q55 60 40 65 Q25 60 25 50 L25 30 Z" fill="#10b981"/>
+  <circle cx="40" cy="45" r="8" fill="#ffffff"/>
+  <circle cx="40" cy="45" r="4" fill="#10b981"/>
+  
+  <text x="70" y="45" font-family="Roboto, sans-serif" font-size="26" font-weight="500" fill="#1f2937">TrustEye</text>
+  <text x="70" y="62" font-family="Roboto, sans-serif" font-size="10" fill="#6b7280">CYBERSECURITY AI</text>
+</svg>

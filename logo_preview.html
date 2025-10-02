@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustEye Logo Options</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .logo-option { 
+            background: white; 
+            padding: 30px; 
+            margin: 20px 0; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .logo-option:hover { transform: translateY(-2px); }
+        .logo-option.selected { border: 3px solid #2563eb; }
+        h1 { text-align: center; color: #1e293b; }
+        .description { margin-top: 15px; color: #64748b; }
+        .select-btn { 
+            background: #2563eb; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Choose Your TrustEye Logo</h1>
+        
+        <div class="logo-option" onclick="selectLogo(1)">
+            <img src="logo_option1.svg" alt="Option 1" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 1: Tech Minimal</strong><br>
+                Clean, simple design with blue accent. Professional and modern.
+            </div>
+            <button class="select-btn" onclick="applyLogo(1)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(2)">
+            <img src="logo_option2.svg" alt="Option 2" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 2: Gradient Modern</strong><br>
+                Stylish gradient with mixed typography weights. Contemporary feel.
+            </div>
+            <button class="select-btn" onclick="applyLogo(2)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(3)">
+            <img src="logo_option3.svg" alt="Option 3" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 3: Shield Security</strong><br>
+                Security-focused with shield design. Perfect for cybersecurity.
+            </div>
+            <button class="select-btn" onclick="applyLogo(3)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(4)">
+            <img src="logo_option4.svg" alt="Option 4" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 4: Geometric Abstract</strong><br>
+                Unique geometric shape with orange accent. Creative and bold.
+            </div>
+            <button class="select-btn" onclick="applyLogo(4)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(5)">
+            <img src="logo_option5.svg" alt="Option 5" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 5: Neon Cyber</strong><br>
+                Futuristic neon glow effect. High-tech cyberpunk aesthetic.
+            </div>
+            <button class="select-btn" onclick="applyLogo(5)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(6)">
+            <img src="logo_option6.svg" alt="Option 6" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 6: Glassmorphism</strong><br>
+                Trendy glass effect with blur. Ultra-modern UI/UX design.
+            </div>
+            <button class="select-btn" onclick="applyLogo(6)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(7)">
+            <img src="logo_option7.svg" alt="Option 7" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 7: Neumorphism</strong><br>
+                Soft shadows and highlights. Popular in modern app design.
+            </div>
+            <button class="select-btn" onclick="applyLogo(7)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(8)">
+            <img src="logo_option8.svg" alt="Option 8" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 8: Brutalist Modern</strong><br>
+                Bold, raw design. Strong visual impact and memorable.
+            </div>
+            <button class="select-btn" onclick="applyLogo(8)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(9)">
+            <img src="logo_option9.svg" alt="Option 9" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 9: Holographic</strong><br>
+                Rainbow gradient effect. Futuristic and eye-catching.
+            </div>
+            <button class="select-btn" onclick="applyLogo(9)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(10)">
+            <img src="logo_option10.svg" alt="Option 10" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 10: Morphing Gradient</strong><br>
+                Organic blob shape with smooth gradients. Very trendy.
+            </div>
+            <button class="select-btn" onclick="applyLogo(10)">Select This Logo</button>
+        </div>
+        
+        <div class="logo-option" onclick="selectLogo(11)">
+            <img src="logo_option11.svg" alt="Option 11" style="width: 250px; height: 100px;">
+            <div class="description">
+                <strong>Option 11: 3D Isometric</strong><br>
+                Three-dimensional cube design. Modern depth and dimension.
+            </div>
+            <button class="select-btn" onclick="applyLogo(11)">Select This Logo</button>
+        </div>
+    </div>
+    
+    <script>
+        function selectLogo(option) {
+            document.querySelectorAll('.logo-option').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+        
+        function applyLogo(option) {
+            alert(`Logo Option ${option} will be applied to TrustEye!`);
+            // This would copy the selected logo to trusteye_logo.svg
+        }
+    </script>
+</body>
+</html>
