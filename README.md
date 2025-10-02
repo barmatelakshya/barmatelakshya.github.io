@@ -39,8 +39,8 @@ python backend/app.py
 ```
 
 ### Access Application
-- **Web Dashboard**: http://localhost:5000
-- **API Status**: http://localhost:5000/api/status
+• **Port 4000** - Main Flask app (app.py)
+• **Port 8080** - TrustEye server (trusteye_single.py, trusteye_online.py)
 
 ## 📁 Project Structure
 
@@ -124,12 +124,12 @@ black backend/ frontend/
 
 ```bash
 # Text Analysis
-curl -X POST http://localhost:5000/api/analyze-text \
+curl -X POST http://localhost:4000/api/analyze-text \
   -H "Content-Type: application/json" \
   -d '{"text": "Urgent! Click here to verify your account"}'
 
 # URL Analysis  
-curl -X POST http://localhost:5000/api/analyze-url \
+curl -X POST http://localhost:4000/api/analyze-url \
   -H "Content-Type: application/json" \
   -d '{"url": "http://suspicious-site.com/login"}'
 ```
