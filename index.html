@@ -304,7 +304,7 @@
         const html = document.documentElement;
 
         // Load saved theme immediately
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('theme') === 'dark') {
             html.classList.add('dark');
         }
 
