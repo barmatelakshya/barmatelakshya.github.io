@@ -78,13 +78,13 @@
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Home</a>
-                    <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Scan</a>
-                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
-                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
-                    <a href="#education" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Learn</a>
-                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">About</a>
-                    <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Contact</a>
+                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.home">Home</a>
+                    <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.scan">Scan</a>
+                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.dashboard">Dashboard</a>
+                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.features">Features</a>
+                    <a href="#education" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.learn">Learn</a>
+                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.about">About</a>
+                    <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" data-translate="nav.contact">Contact</a>
                 </div>
 
                 <div class="flex items-center space-x-4">
@@ -137,20 +137,19 @@
         <section id="home" class="text-center mb-16 animate-fade-in">
             <div class="relative">
                 <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-slide-up">
-                    <span class="gradient-text">AI-Powered</span><br>
-                    <span class="text-gray-900 dark:text-white">Threat Detection</span>
+                    <span class="gradient-text" data-translate="hero.title">AI-Powered Threat Detection</span>
                 </h1>
                 <div class="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-xl animate-pulse-slow"></div>
                 <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-xl animate-bounce-slow"></div>
             </div>
-            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 animate-slide-up">
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 animate-slide-up" data-translate="hero.subtitle">
                 Protect your digital assets with <span class="font-semibold text-primary">advanced machine learning</span> algorithms and real-time threat intelligence
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
-                <button onclick="tryDemo()" class="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-lg shadow-xl hover-lift hover:shadow-2xl transition-all duration-300">
+                <button onclick="tryDemo()" class="px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-lg shadow-xl hover-lift hover:shadow-2xl transition-all duration-300" data-translate="hero.startScanning">
                     <i class="fas fa-rocket mr-2"></i>Start Scanning
                 </button>
-                <button onclick="document.getElementById('education').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 border-2 border-primary text-primary rounded-xl font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300">
+                <button onclick="document.getElementById('education').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 border-2 border-primary text-primary rounded-xl font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300" data-translate="hero.learnSecurity">
                     <i class="fas fa-graduation-cap mr-2"></i>Learn Security
                 </button>
             </div>
@@ -596,11 +595,111 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        // Language toggle
-        let currentLang = 'en';
-        document.getElementById('langToggle').addEventListener('click', () => {
-            currentLang = currentLang === 'en' ? 'hi' : 'en';
+        // Language translations
+        const translations = {
+            en: {
+                nav: {
+                    home: 'Home',
+                    scan: 'Scan',
+                    dashboard: 'Dashboard',
+                    features: 'Features',
+                    learn: 'Learn',
+                    about: 'About',
+                    contact: 'Contact',
+                    tryDemo: 'Try Demo'
+                },
+                hero: {
+                    title: 'AI-Powered Threat Detection',
+                    subtitle: 'Protect your digital assets with advanced machine learning algorithms and real-time threat intelligence',
+                    startScanning: 'Start Scanning',
+                    learnSecurity: 'Learn Security'
+                },
+                scanner: {
+                    title: 'Advanced Threat Scanner',
+                    urlLabel: 'URL Analysis',
+                    urlPlaceholder: 'Enter URL to scan (e.g., https://example.com)...',
+                    textLabel: 'Text & Email Analysis',
+                    textPlaceholder: 'Paste email content, message, or any text to analyze for threats...',
+                    scanNow: 'Scan Now',
+                    analyzeContent: 'Analyze Content'
+                },
+                dashboard: {
+                    title: 'Security Dashboard',
+                    totalScans: 'Total Scans',
+                    threatsBlocked: 'Threats Blocked',
+                    successRate: 'Success Rate'
+                }
+            },
+            hi: {
+                nav: {
+                    home: 'होम',
+                    scan: 'स्कैन',
+                    dashboard: 'डैशबोर्ड',
+                    features: 'विशेषताएं',
+                    learn: 'सीखें',
+                    about: 'हमारे बारे में',
+                    contact: 'संपर्क',
+                    tryDemo: 'डेमो आज़माएं'
+                },
+                hero: {
+                    title: 'AI-संचालित खतरा पहचान',
+                    subtitle: 'उन्नत मशीन लर्निंग एल्गोरिदम और रीयल-टाइम खतरा बुद्धिमत्ता के साथ अपनी डिजिटल संपत्ति की सुरक्षा करें',
+                    startScanning: 'स्कैनिंग शुरू करें',
+                    learnSecurity: 'सुरक्षा सीखें'
+                },
+                scanner: {
+                    title: 'उन्नत खतरा स्कैनर',
+                    urlLabel: 'URL विश्लेषण',
+                    urlPlaceholder: 'स्कैन करने के लिए URL दर्ज करें (जैसे, https://example.com)...',
+                    textLabel: 'टेक्स्ट और ईमेल विश्लेषण',
+                    textPlaceholder: 'खतरों का विश्लेषण करने के लिए ईमेल सामग्री, संदेश, या कोई भी टेक्स्ट पेस्ट करें...',
+                    scanNow: 'अभी स्कैन करें',
+                    analyzeContent: 'सामग्री का विश्लेषण करें'
+                },
+                dashboard: {
+                    title: 'सुरक्षा डैशबोर्ड',
+                    totalScans: 'कुल स्कैन',
+                    threatsBlocked: 'अवरुद्ध खतरे',
+                    successRate: 'सफलता दर'
+                }
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            
+            // Update navigation
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                const keys = key.split('.');
+                let value = t;
+                keys.forEach(k => value = value[k]);
+                if (value) element.textContent = value;
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                const keys = key.split('.');
+                let value = t;
+                keys.forEach(k => value = value[k]);
+                if (value) element.placeholder = value;
+            });
+
+            // Update language button
             document.getElementById('langText').textContent = currentLang.toUpperCase();
+            localStorage.setItem('language', currentLang);
+        }
+
+        // Language toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('langToggle').addEventListener('click', () => {
+                currentLang = currentLang === 'en' ? 'hi' : 'en';
+                updateLanguage();
+            });
+            updateLanguage();
         });
 
         // Try Demo function
