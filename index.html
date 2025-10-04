@@ -42,6 +42,7 @@
                     <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Scan</a>
                     <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                     <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                    <a href="#education" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Learn</a>
                     <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">About</a>
                     <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Contact</a>
                 </div>
@@ -77,6 +78,7 @@
                     <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Scan</a>
                     <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                     <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                    <a href="#education" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Learn</a>
                     <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">About</a>
                     <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Contact</a>
                 </div>
@@ -246,6 +248,174 @@
                     <i class="fas fa-clock text-3xl text-primary mb-4"></i>
                     <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Real-time</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Instant threat detection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Educational Content Section -->
+        <section id="education" class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Cybersecurity Education</h2>
+            
+            <!-- Education Tabs -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="border-b border-gray-200 dark:border-gray-700">
+                    <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                        <button onclick="showTab('threats')" class="edu-tab active py-4 px-1 border-b-2 border-primary text-primary font-medium text-sm">
+                            Threat Encyclopedia
+                        </button>
+                        <button onclick="showTab('tips')" class="edu-tab py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                            Security Tips
+                        </button>
+                        <button onclick="showTab('quiz')" class="edu-tab py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                            Phishing Quiz
+                        </button>
+                        <button onclick="showTab('cases')" class="edu-tab py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                            Case Studies
+                        </button>
+                        <button onclick="showTab('guide')" class="edu-tab py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
+                            Best Practices
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Threat Encyclopedia -->
+                <div id="threats" class="edu-content p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Known Threat Database</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                            <h4 class="font-semibold text-red-800 dark:text-red-300 mb-2">Phishing Attacks</h4>
+                            <p class="text-sm text-red-700 dark:text-red-400">Fraudulent emails designed to steal credentials and personal information.</p>
+                        </div>
+                        <div class="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                            <h4 class="font-semibold text-orange-800 dark:text-orange-300 mb-2">Malware</h4>
+                            <p class="text-sm text-orange-700 dark:text-orange-400">Malicious software including viruses, trojans, and ransomware.</p>
+                        </div>
+                        <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                            <h4 class="font-semibold text-yellow-800 dark:text-yellow-300 mb-2">Social Engineering</h4>
+                            <p class="text-sm text-yellow-700 dark:text-yellow-400">Psychological manipulation to trick users into revealing information.</p>
+                        </div>
+                        <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                            <h4 class="font-semibold text-purple-800 dark:text-purple-300 mb-2">Man-in-the-Middle</h4>
+                            <p class="text-sm text-purple-700 dark:text-purple-400">Intercepting communications between two parties.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Tips -->
+                <div id="tips" class="edu-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Daily Security Tips</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                            <i class="fas fa-lightbulb text-green-600 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-green-800 dark:text-green-300">Use Strong Passwords</h4>
+                                <p class="text-sm text-green-700 dark:text-green-400">Create unique passwords with 12+ characters, including numbers and symbols.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <i class="fas fa-shield-alt text-blue-600 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-blue-800 dark:text-blue-300">Enable 2FA</h4>
+                                <p class="text-sm text-blue-700 dark:text-blue-400">Add two-factor authentication to all important accounts.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                            <i class="fas fa-download text-indigo-600 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-indigo-800 dark:text-indigo-300">Keep Software Updated</h4>
+                                <p class="text-sm text-indigo-700 dark:text-indigo-400">Install security updates promptly to patch vulnerabilities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phishing Quiz -->
+                <div id="quiz" class="edu-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Interactive Phishing Quiz</h3>
+                    <div id="quizContainer">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg mb-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3">Question 1: Is this email suspicious?</h4>
+                            <div class="bg-white dark:bg-gray-800 p-3 rounded border text-sm mb-3">
+                                "URGENT: Your account will be suspended in 24 hours. Click here to verify immediately!"
+                            </div>
+                            <div class="space-x-3">
+                                <button onclick="quizAnswer(true)" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Suspicious</button>
+                                <button onclick="quizAnswer(false)" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Safe</button>
+                            </div>
+                        </div>
+                        <div id="quizResult" class="hidden p-4 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <!-- Case Studies -->
+                <div id="cases" class="edu-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Real-World Attack Examples</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Target Data Breach (2013)</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">40 million credit card records stolen through HVAC vendor compromise.</p>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Supply Chain Attack</span>
+                        </div>
+                        <div class="p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">WannaCry Ransomware (2017)</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Global ransomware attack affecting 300,000 computers across 150 countries.</p>
+                            <span class="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">Ransomware</span>
+                        </div>
+                        <div class="p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Equifax Breach (2017)</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">147 million personal records exposed due to unpatched vulnerability.</p>
+                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Data Breach</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best Practices -->
+                <div id="guide" class="edu-content hidden p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Security Best Practices</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3">Personal Security</h4>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Use password managers</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Verify sender before clicking links</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Keep software updated</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Use secure Wi-Fi networks</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-3">Business Security</h4>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Implement employee training</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Regular security audits</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Backup data regularly</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i class="fas fa-check text-green-500"></i>
+                                    <span>Monitor network traffic</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -486,6 +656,56 @@
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', initCharts);
+
+        // Educational Content Functions
+        function showTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.edu-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.edu-tab').forEach(tab => {
+                tab.classList.remove('active', 'border-primary', 'text-primary');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Activate selected tab
+            event.target.classList.add('active', 'border-primary', 'text-primary');
+            event.target.classList.remove('border-transparent', 'text-gray-500');
+        }
+
+        function quizAnswer(isSuspicious) {
+            const result = document.getElementById('quizResult');
+            result.classList.remove('hidden');
+            
+            if (isSuspicious) {
+                result.className = 'p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800';
+                result.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                        <span class="font-semibold text-green-800 dark:text-green-300">Correct!</span>
+                    </div>
+                    <p class="text-sm text-green-700 dark:text-green-400 mt-2">
+                        This email uses urgency tactics and suspicious language typical of phishing attempts.
+                    </p>
+                `;
+            } else {
+                result.className = 'p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800';
+                result.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-times-circle text-red-600"></i>
+                        <span class="font-semibold text-red-800 dark:text-red-300">Incorrect!</span>
+                    </div>
+                    <p class="text-sm text-red-700 dark:text-red-400 mt-2">
+                        This email shows clear signs of phishing: urgency, threats, and suspicious links.
+                    </p>
+                `;
+            }
+        }
     </script>
 </body>
 </html>
