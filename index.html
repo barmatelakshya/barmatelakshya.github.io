@@ -202,8 +202,30 @@
                     </label>
                     <textarea id="textInput" rows="4" placeholder="Paste email content, message, or any text to analyze for threats..."
                               class="w-full px-6 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-accent/20 focus:border-accent bg-white/80 dark:bg-gray-700/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-lg backdrop-blur-sm transition-all duration-300"></textarea>
+                    
+                    <div class="flex flex-wrap gap-3 mt-4 mb-4">
+                        <button onclick="loadTextSample('spam1')" class="text-sm px-4 py-2 bg-gradient-to-r from-red-100 to-red-200 text-red-800 rounded-full hover:from-red-200 hover:to-red-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>Urgent Scam
+                        </button>
+                        <button onclick="loadTextSample('spam2')" class="text-sm px-4 py-2 bg-gradient-to-r from-red-100 to-red-200 text-red-800 rounded-full hover:from-red-200 hover:to-red-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-gift mr-1"></i>Fake Prize
+                        </button>
+                        <button onclick="loadTextSample('spam3')" class="text-sm px-4 py-2 bg-gradient-to-r from-red-100 to-red-200 text-red-800 rounded-full hover:from-red-200 hover:to-red-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-credit-card mr-1"></i>Bank Fraud
+                        </button>
+                        <button onclick="loadTextSample('normal1')" class="text-sm px-4 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-full hover:from-green-200 hover:to-green-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-check-circle mr-1"></i>Business Email
+                        </button>
+                        <button onclick="loadTextSample('normal2')" class="text-sm px-4 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-full hover:from-green-200 hover:to-green-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-calendar mr-1"></i>Meeting Invite
+                        </button>
+                        <button onclick="loadTextSample('normal3')" class="text-sm px-4 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-full hover:from-green-200 hover:to-green-300 transition-all duration-300 shadow-md hover-lift font-medium">
+                            <i class="fas fa-info-circle mr-1"></i>Newsletter
+                        </button>
+                    </div>
+                    
                     <button onclick="scanText()" 
-                            class="mt-4 px-8 py-3 bg-gradient-to-r from-accent to-cyan-600 text-white rounded-xl hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 font-semibold shadow-lg hover-lift">
+                            class="px-8 py-3 bg-gradient-to-r from-accent to-cyan-600 text-white rounded-xl hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 font-semibold shadow-lg hover-lift">
                         <i class="fas fa-search-plus mr-2"></i>Analyze Content
                     </button>
                 </div>
@@ -595,6 +617,19 @@
             urlInput.value = samples[type] || samples.safe1;
         }
 
+        function loadTextSample(type) {
+            const textInput = document.getElementById('textInput');
+            const samples = {
+                spam1: 'URGENT: Your account will be suspended in 24 hours! Click here immediately to verify your identity and avoid permanent closure. Act now or lose access forever!',
+                spam2: 'Congratulations! You have won $1,000,000 in our lottery! Send your bank details and $500 processing fee to claim your prize within 48 hours!',
+                spam3: 'SECURITY ALERT: Suspicious activity detected on your bank account. Please provide your login credentials immediately to secure your funds.',
+                normal1: 'Hi John, I hope this email finds you well. I wanted to follow up on our meeting yesterday regarding the quarterly budget review. Please let me know your availability for next week.',
+                normal2: 'Meeting Invitation: Project Review - Tomorrow at 2:00 PM in Conference Room A. Please bring your project reports and any questions you may have.',
+                normal3: 'Thank you for subscribing to our newsletter! Here are this week\'s top cybersecurity tips and industry updates. Stay safe online!'
+            };
+            textInput.value = samples[type] || samples.normal1;
+        }
+
         // Scan functions
         function scanUrl() {
             const url = document.getElementById('urlInput').value;
@@ -617,10 +652,12 @@
             showLoading();
             
             setTimeout(() => {
-                const isSpam = text.toLowerCase().includes('urgent') || text.toLowerCase().includes('suspended');
+                const spamKeywords = ['urgent', 'suspended', 'click here', 'act now', 'congratulations', 'won', 'lottery', 'bank details', 'processing fee', 'security alert', 'suspicious activity', 'login credentials'];
+                const isSpam = spamKeywords.some(keyword => text.toLowerCase().includes(keyword));
+                
                 showResult(isSpam ? 'warning' : 'safe',
                           isSpam ? 'Suspicious content detected' : 'Text appears normal',
-                          isSpam ? 'This message contains spam indicators.' : 'No suspicious patterns found.');
+                          isSpam ? 'This message contains spam/phishing indicators.' : 'No suspicious patterns found.');
             }, 1500);
         }
 
