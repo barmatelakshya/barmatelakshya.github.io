@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>TrustEye - AI Cybersecurity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -684,15 +690,67 @@
             }
         }
 
-        // Scan functions with proper dashboard updates
-        function scanUrl() {
-            const url = document.getElementById('urlInput').value;
-            if (!url) return;
+        // Input sanitization
+        function sanitizeInput(input) {
+            return input.replace(/[<>\"'&]/g, function(match) {
+                const map = {
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#x27;',
+                    '&': '&amp;'
+                };
+                return map[match];
+            });
+        }
 
+        function validateUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+            } catch {
+                return false;
+            }
+        }
+
+        // Rate limiting
+        let lastScanTime = 0;
+        const SCAN_COOLDOWN = 2000; // 2 seconds
+
+        function checkRateLimit() {
+            const now = Date.now();
+            if (now - lastScanTime < SCAN_COOLDOWN) {
+                return false;
+            }
+            lastScanTime = now;
+            return true;
+        }
+
+        // Scan functions with security
+        function scanUrl() {
+            const urlInput = document.getElementById('urlInput');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showResult('warning', 'Invalid Input', 'Please enter a URL to scan.');
+                return;
+            }
+
+            if (!validateUrl(url)) {
+                showResult('warning', 'Invalid URL', 'Please enter a valid HTTP or HTTPS URL.');
+                return;
+            }
+
+            if (!checkRateLimit()) {
+                showResult('warning', 'Rate Limited', 'Please wait before scanning again.');
+                return;
+            }
+
+            const sanitizedUrl = sanitizeInput(url);
             showLoading();
             
             setTimeout(() => {
-                const isPhishing = url.includes('secure-bank') || url.includes('paypal-security') || url.includes('netflix-billing') || url.includes('verify') || url.includes('confirm') || url.includes('update');
+                const isPhishing = sanitizedUrl.includes('secure-bank') || sanitizedUrl.includes('paypal-security') || sanitizedUrl.includes('netflix-billing') || sanitizedUrl.includes('verify') || sanitizedUrl.includes('confirm') || sanitizedUrl.includes('update');
                 
                 // Update dashboard safely
                 dashboardData.totalScans++;
@@ -704,7 +762,7 @@
                 // Add to scan history
                 dashboardData.scanHistory.unshift({
                     type: 'URL',
-                    content: url,
+                    content: sanitizedUrl,
                     result: isPhishing ? 'Threat' : 'Safe',
                     timestamp: new Date().toLocaleString()
                 });
@@ -723,14 +781,30 @@
         }
 
         function scanText() {
-            const text = document.getElementById('textInput').value;
-            if (!text) return;
+            const textInput = document.getElementById('textInput');
+            const text = textInput.value.trim();
+            
+            if (!text) {
+                showResult('warning', 'Invalid Input', 'Please enter text to analyze.');
+                return;
+            }
 
+            if (text.length > 5000) {
+                showResult('warning', 'Text Too Long', 'Please limit text to 5000 characters.');
+                return;
+            }
+
+            if (!checkRateLimit()) {
+                showResult('warning', 'Rate Limited', 'Please wait before scanning again.');
+                return;
+            }
+
+            const sanitizedText = sanitizeInput(text);
             showLoading();
             
             setTimeout(() => {
                 const spamKeywords = ['urgent', 'suspended', 'click here', 'act now', 'congratulations', 'won', 'lottery', 'bank details', 'processing fee', 'security alert', 'suspicious activity', 'login credentials'];
-                const isSpam = spamKeywords.some(keyword => text.toLowerCase().includes(keyword));
+                const isSpam = spamKeywords.some(keyword => sanitizedText.toLowerCase().includes(keyword));
                 
                 // Update dashboard safely
                 dashboardData.totalScans++;
@@ -742,7 +816,7 @@
                 // Add to scan history
                 dashboardData.scanHistory.unshift({
                     type: 'Text',
-                    content: text.substring(0, 50) + '...',
+                    content: sanitizedText.substring(0, 50) + '...',
                     result: isSpam ? 'Threat' : 'Safe',
                     timestamp: new Date().toLocaleString()
                 });
@@ -930,29 +1004,45 @@
             }
         }
 
-        // Data management functions
+        // Secure data management functions
         function exportData() {
-            const dataStr = JSON.stringify(dashboardData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'trusteye-data.json';
-            link.click();
-            URL.revokeObjectURL(url);
+            try {
+                const sanitizedData = {
+                    ...dashboardData,
+                    scanHistory: dashboardData.scanHistory.map(scan => ({
+                        ...scan,
+                        content: sanitizeInput(scan.content)
+                    }))
+                };
+                
+                const dataStr = JSON.stringify(sanitizedData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `trusteye-data-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                alert('Export failed. Please try again.');
+            }
         }
 
         function clearData() {
             if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
-                localStorage.removeItem('trusteyeData');
-                dashboardData = {
-                    totalScans: 0,
-                    threatsBlocked: 0,
-                    successRate: 0,
-                    scanHistory: []
-                };
-                updateDashboard();
-                alert('Data cleared successfully!');
+                try {
+                    localStorage.removeItem('trusteyeData');
+                    dashboardData = {
+                        totalScans: 0,
+                        threatsBlocked: 0,
+                        successRate: 0,
+                        scanHistory: []
+                    };
+                    updateDashboard();
+                    alert('Data cleared successfully!');
+                } catch (error) {
+                    alert('Clear failed. Please try again.');
+                }
             }
         }
     </script>
