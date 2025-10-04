@@ -25,7 +25,7 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <!-- Navigation -->
-    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
@@ -34,11 +34,50 @@
                     </div>
                     <span class="text-xl font-bold text-gray-900 dark:text-white">TrustEye</span>
                 </div>
-                <div class="flex items-center space-x-4">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Home</a>
+                    <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Scan</a>
+                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
+                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">About</a>
+                    <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <!-- Language Toggle -->
+                    <button id="langToggle" class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <span id="langText">EN</span>
+                    </button>
+                    
+                    <!-- Theme Toggle -->
                     <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                         <i class="fas fa-moon dark:hidden"></i>
                         <i class="fas fa-sun hidden dark:block"></i>
                     </button>
+                    
+                    <!-- Try Demo CTA -->
+                    <button onclick="tryDemo()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        Try Demo
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Home</a>
+                    <a href="#scan" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Scan</a>
+                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
+                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">About</a>
+                    <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Contact</a>
                 </div>
             </div>
         </div>
@@ -47,18 +86,22 @@
     <!-- Main Content -->
     <main class="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-7xl mx-auto">
-        <!-- Hero Section -->
-        <div class="text-center mb-12">
+    <!-- Main Content -->
+    <main class="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto">
+        
+        <!-- Home Section -->
+        <section id="home" class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 AI-Powered Threat Detection
             </h1>
             <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 Protect your digital assets with advanced machine learning algorithms
             </p>
-        </div>
+        </section>
 
         <!-- Scanner Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <section id="scan" class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
             <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Threat Scanner</h2>
             
             <div class="space-y-6">
@@ -109,10 +152,13 @@
                     <span class="text-gray-600 dark:text-gray-300">Scanning...</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Dashboard -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Security Dashboard</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <!-- Stats Cards -->
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
                 <div class="flex items-center justify-between">
@@ -162,11 +208,124 @@
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Scan History</h3>
                 <canvas id="historyChart" width="400" height="200"></canvas>
             </div>
-        </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-brain text-3xl text-primary mb-4"></i>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-2">AI Detection</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Advanced ML algorithms</p>
+                </div>
+                <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-mobile-alt text-3xl text-primary mb-4"></i>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Mobile App</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Real-time SMS protection</p>
+                </div>
+                <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-puzzle-piece text-3xl text-primary mb-4"></i>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Browser Extension</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Web browsing protection</p>
+                </div>
+                <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-clock text-3xl text-primary mb-4"></i>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Real-time</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Instant threat detection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">About TrustEye</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    TrustEye is an AI-powered cybersecurity platform built for Smart India Hackathon 2025. 
+                    Our comprehensive solution includes web scanning, mobile protection, and browser extensions.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Tech Stack</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Python, JavaScript, Machine Learning, Android</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Architecture</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Modular API, Real-time Processing, Cloud Ready</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibent text-gray-900 dark:text-white mb-2">Team</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">SIH 2025 Participants</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Contact & Feedback</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Get in Touch</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Have questions or feedback? We'd love to hear from you.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-envelope text-primary"></i>
+                                <span class="text-gray-600 dark:text-gray-300">team@trusteye.ai</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fab fa-github text-primary"></i>
+                                <span class="text-gray-600 dark:text-gray-300">github.com/barmatelakshya</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea placeholder="Your feedback..." rows="4" 
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-3"></textarea>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Send Feedback
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         </div>
     </main>
 
     <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // Language toggle
+        let currentLang = 'en';
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            document.getElementById('langText').textContent = currentLang.toUpperCase();
+        });
+
+        // Try Demo function
+        function tryDemo() {
+            document.getElementById('urlInput').value = 'https://secure-bank-login.com/verify-account';
+            document.getElementById('scan').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => scanUrl(), 500);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
