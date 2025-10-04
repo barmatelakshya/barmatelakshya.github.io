@@ -646,11 +646,11 @@
             textInput.value = samples[type] || samples.normal1;
         }
 
-        // Dashboard data with localStorage
+        // Dashboard data with localStorage - fresh start for new users
         let dashboardData = JSON.parse(localStorage.getItem('trusteyeData')) || {
-            totalScans: 1247,
-            threatsBlocked: 89,
-            successRate: 94.2,
+            totalScans: 0,
+            threatsBlocked: 0,
+            successRate: 0,
             scanHistory: []
         };
 
@@ -879,7 +879,7 @@
                         data: {
                             labels: ['Safe', 'Phishing', 'Malware', 'Spam'],
                             datasets: [{
-                                data: [1158, 45, 28, 16],
+                                data: [0, 0, 0, 0],
                                 backgroundColor: ['#10b981', '#ef4444', '#f59e0b', '#8b5cf6'],
                                 borderWidth: 0
                             }]
@@ -909,7 +909,7 @@
                             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                             datasets: [{
                                 label: 'Scans',
-                                data: [65, 78, 90, 81, 56, 85, 92],
+                                data: [0, 0, 0, 0, 0, 0, 0],
                                 borderColor: '#1e40af',
                                 backgroundColor: 'rgba(30, 64, 175, 0.1)',
                                 tension: 0.4,
