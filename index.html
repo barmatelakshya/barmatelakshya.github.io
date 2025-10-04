@@ -630,6 +630,41 @@
             textInput.value = samples[type] || samples.normal1;
         }
 
+        // Dashboard data
+        let dashboardData = {
+            totalScans: 1247,
+            threatsBlocked: 89,
+            successRate: 94.2
+        };
+
+        function updateDashboard() {
+            // Animate counter updates
+            animateCounter('totalScans', dashboardData.totalScans);
+            animateCounter('threatsBlocked', dashboardData.threatsBlocked);
+            document.getElementById('successRate').textContent = dashboardData.successRate + '%';
+        }
+
+        function animateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const currentValue = parseInt(element.textContent.replace(/,/g, '')) || 0;
+            const increment = targetValue > currentValue ? 1 : -1;
+            const duration = 500; // ms
+            const steps = Math.abs(targetValue - currentValue);
+            const stepTime = duration / steps;
+
+            let current = currentValue;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = current.toLocaleString();
+                element.classList.add('animate-pulse');
+                
+                if (current === targetValue) {
+                    clearInterval(timer);
+                    setTimeout(() => element.classList.remove('animate-pulse'), 1000);
+                }
+            }, stepTime);
+        }
+
         // Scan functions
         function scanUrl() {
             const url = document.getElementById('urlInput').value;
@@ -639,6 +674,15 @@
             
             setTimeout(() => {
                 const isPhishing = url.includes('secure-bank') || url.includes('paypal-security') || url.includes('netflix-billing') || url.includes('verify') || url.includes('confirm') || url.includes('update');
+                
+                // Update dashboard
+                dashboardData.totalScans++;
+                if (isPhishing) {
+                    dashboardData.threatsBlocked++;
+                }
+                dashboardData.successRate = ((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1);
+                updateDashboard();
+                
                 showResult(isPhishing ? 'danger' : 'safe', 
                           isPhishing ? 'Phishing detected!' : 'URL appears safe',
                           isPhishing ? 'This URL shows signs of phishing activity.' : 'No threats detected.');
@@ -654,6 +698,14 @@
             setTimeout(() => {
                 const spamKeywords = ['urgent', 'suspended', 'click here', 'act now', 'congratulations', 'won', 'lottery', 'bank details', 'processing fee', 'security alert', 'suspicious activity', 'login credentials'];
                 const isSpam = spamKeywords.some(keyword => text.toLowerCase().includes(keyword));
+                
+                // Update dashboard
+                dashboardData.totalScans++;
+                if (isSpam) {
+                    dashboardData.threatsBlocked++;
+                }
+                dashboardData.successRate = ((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1);
+                updateDashboard();
                 
                 showResult(isSpam ? 'warning' : 'safe',
                           isSpam ? 'Suspicious content detected' : 'Text appears normal',
@@ -744,7 +796,10 @@
         }
 
         // Initialize on load
-        document.addEventListener('DOMContentLoaded', initCharts);
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateDashboard();
+        });
 
         // Educational Content Functions
         function showTab(tabName) {
