@@ -550,6 +550,12 @@
                         <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
                             Send Feedback
                         </button>
+                        <button onclick="exportData()" class="ml-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                            Export Data
+                        </button>
+                        <button onclick="clearData()" class="ml-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Clear Data
+                        </button>
                     </div>
                 </div>
             </div>
@@ -634,12 +640,17 @@
             textInput.value = samples[type] || samples.normal1;
         }
 
-        // Dashboard data
-        let dashboardData = {
+        // Dashboard data with localStorage
+        let dashboardData = JSON.parse(localStorage.getItem('trusteyeData')) || {
             totalScans: 1247,
             threatsBlocked: 89,
-            successRate: 94.2
+            successRate: 94.2,
+            scanHistory: []
         };
+
+        function saveDashboardData() {
+            localStorage.setItem('trusteyeData', JSON.stringify(dashboardData));
+        }
 
         function updateDashboard() {
             try {
@@ -665,6 +676,9 @@
                     rateElement.classList.add('animate-pulse');
                     setTimeout(() => rateElement.classList.remove('animate-pulse'), 1000);
                 }
+                
+                // Save to localStorage
+                saveDashboardData();
             } catch (error) {
                 console.log('Dashboard update error:', error);
             }
@@ -686,6 +700,19 @@
                     dashboardData.threatsBlocked++;
                 }
                 dashboardData.successRate = parseFloat(((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1));
+                
+                // Add to scan history
+                dashboardData.scanHistory.unshift({
+                    type: 'URL',
+                    content: url,
+                    result: isPhishing ? 'Threat' : 'Safe',
+                    timestamp: new Date().toLocaleString()
+                });
+                
+                // Keep only last 50 scans
+                if (dashboardData.scanHistory.length > 50) {
+                    dashboardData.scanHistory = dashboardData.scanHistory.slice(0, 50);
+                }
                 
                 updateDashboard();
                 
@@ -711,6 +738,19 @@
                     dashboardData.threatsBlocked++;
                 }
                 dashboardData.successRate = parseFloat(((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1));
+                
+                // Add to scan history
+                dashboardData.scanHistory.unshift({
+                    type: 'Text',
+                    content: text.substring(0, 50) + '...',
+                    result: isSpam ? 'Threat' : 'Safe',
+                    timestamp: new Date().toLocaleString()
+                });
+                
+                // Keep only last 50 scans
+                if (dashboardData.scanHistory.length > 50) {
+                    dashboardData.scanHistory = dashboardData.scanHistory.slice(0, 50);
+                }
                 
                 updateDashboard();
                 
@@ -887,6 +927,32 @@
                         This email shows clear signs of phishing: urgency, threats, and suspicious links.
                     </p>
                 `;
+            }
+        }
+
+        // Data management functions
+        function exportData() {
+            const dataStr = JSON.stringify(dashboardData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'trusteye-data.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                localStorage.removeItem('trusteyeData');
+                dashboardData = {
+                    totalScans: 0,
+                    threatsBlocked: 0,
+                    successRate: 0,
+                    scanHistory: []
+                };
+                updateDashboard();
+                alert('Data cleared successfully!');
             }
         }
     </script>
