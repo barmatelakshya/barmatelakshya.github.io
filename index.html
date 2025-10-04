@@ -638,34 +638,35 @@
         };
 
         function updateDashboard() {
-            // Animate counter updates
-            animateCounter('totalScans', dashboardData.totalScans);
-            animateCounter('threatsBlocked', dashboardData.threatsBlocked);
-            document.getElementById('successRate').textContent = dashboardData.successRate + '%';
-        }
-
-        function animateCounter(elementId, targetValue) {
-            const element = document.getElementById(elementId);
-            const currentValue = parseInt(element.textContent.replace(/,/g, '')) || 0;
-            const increment = targetValue > currentValue ? 1 : -1;
-            const duration = 500; // ms
-            const steps = Math.abs(targetValue - currentValue);
-            const stepTime = duration / steps;
-
-            let current = currentValue;
-            const timer = setInterval(() => {
-                current += increment;
-                element.textContent = current.toLocaleString();
-                element.classList.add('animate-pulse');
+            try {
+                // Animate counter updates with error handling
+                const totalElement = document.getElementById('totalScans');
+                const threatsElement = document.getElementById('threatsBlocked');
+                const rateElement = document.getElementById('successRate');
                 
-                if (current === targetValue) {
-                    clearInterval(timer);
-                    setTimeout(() => element.classList.remove('animate-pulse'), 1000);
+                if (totalElement) {
+                    totalElement.textContent = dashboardData.totalScans.toLocaleString();
+                    totalElement.classList.add('animate-pulse');
+                    setTimeout(() => totalElement.classList.remove('animate-pulse'), 1000);
                 }
-            }, stepTime);
+                
+                if (threatsElement) {
+                    threatsElement.textContent = dashboardData.threatsBlocked;
+                    threatsElement.classList.add('animate-pulse');
+                    setTimeout(() => threatsElement.classList.remove('animate-pulse'), 1000);
+                }
+                
+                if (rateElement) {
+                    rateElement.textContent = dashboardData.successRate + '%';
+                    rateElement.classList.add('animate-pulse');
+                    setTimeout(() => rateElement.classList.remove('animate-pulse'), 1000);
+                }
+            } catch (error) {
+                console.log('Dashboard update error:', error);
+            }
         }
 
-        // Scan functions
+        // Scan functions with proper dashboard updates
         function scanUrl() {
             const url = document.getElementById('urlInput').value;
             if (!url) return;
@@ -675,12 +676,13 @@
             setTimeout(() => {
                 const isPhishing = url.includes('secure-bank') || url.includes('paypal-security') || url.includes('netflix-billing') || url.includes('verify') || url.includes('confirm') || url.includes('update');
                 
-                // Update dashboard
+                // Update dashboard safely
                 dashboardData.totalScans++;
                 if (isPhishing) {
                     dashboardData.threatsBlocked++;
                 }
-                dashboardData.successRate = ((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1);
+                dashboardData.successRate = parseFloat(((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1));
+                
                 updateDashboard();
                 
                 showResult(isPhishing ? 'danger' : 'safe', 
@@ -699,12 +701,13 @@
                 const spamKeywords = ['urgent', 'suspended', 'click here', 'act now', 'congratulations', 'won', 'lottery', 'bank details', 'processing fee', 'security alert', 'suspicious activity', 'login credentials'];
                 const isSpam = spamKeywords.some(keyword => text.toLowerCase().includes(keyword));
                 
-                // Update dashboard
+                // Update dashboard safely
                 dashboardData.totalScans++;
                 if (isSpam) {
                     dashboardData.threatsBlocked++;
                 }
-                dashboardData.successRate = ((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1);
+                dashboardData.successRate = parseFloat(((dashboardData.totalScans - dashboardData.threatsBlocked) / dashboardData.totalScans * 100).toFixed(1));
+                
                 updateDashboard();
                 
                 showResult(isSpam ? 'warning' : 'safe',
@@ -747,52 +750,84 @@
             results.classList.remove('hidden');
         }
 
-        // Initialize charts
+        // Initialize charts with error handling
         function initCharts() {
-            // Threat Distribution Chart
-            const threatCtx = document.getElementById('threatChart').getContext('2d');
-            new Chart(threatCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Safe', 'Phishing', 'Malware', 'Spam'],
-                    datasets: [{
-                        data: [1158, 45, 28, 16],
-                        backgroundColor: ['#10b981', '#ef4444', '#f59e0b', '#8b5cf6']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
+            try {
+                // Threat Distribution Chart
+                const threatCtx = document.getElementById('threatChart');
+                if (threatCtx) {
+                    new Chart(threatCtx.getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Safe', 'Phishing', 'Malware', 'Spam'],
+                            datasets: [{
+                                data: [1158, 45, 28, 16],
+                                backgroundColor: ['#10b981', '#ef4444', '#f59e0b', '#8b5cf6'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 20,
+                                        usePointStyle: true
+                                    }
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
 
-            // History Chart
-            const historyCtx = document.getElementById('historyChart').getContext('2d');
-            new Chart(historyCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [{
-                        label: 'Scans',
-                        data: [65, 78, 90, 81, 56, 85, 92],
-                        borderColor: '#1e40af',
-                        backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                // History Chart
+                const historyCtx = document.getElementById('historyChart');
+                if (historyCtx) {
+                    new Chart(historyCtx.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            datasets: [{
+                                label: 'Scans',
+                                data: [65, 78, 90, 81, 56, 85, 92],
+                                borderColor: '#1e40af',
+                                backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: '#1e40af',
+                                pointBorderColor: '#ffffff',
+                                pointBorderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.1)'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
+            } catch (error) {
+                console.log('Chart initialization error:', error);
+            }
         }
 
         // Initialize on load
