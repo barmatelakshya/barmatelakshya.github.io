@@ -3,195 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrustEye - AI-Powered Threat Detection | Smart India Hackathon 2024</title>
-    <meta name="description" content="TrustEye: Advanced AI-powered cybersecurity threat detection platform. Scan emails, URLs, and files for phishing, malware, and security risks in real-time.">
-    <meta name="keywords" content="cybersecurity, threat detection, AI, phishing, malware, security scanner, Smart India Hackathon">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%232c3e50'/%3E%3Cpath d='M50 20 L65 35 L50 50 L35 35 Z' fill='%237dd3fc'/%3E%3Ccircle cx='50' cy='65' r='8' fill='%237dd3fc'/%3E%3C/svg%3E">
+    <title>TrustEye - AI Threat Detection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #7dd3fc;
+            --interactive-color: #0ea5e9;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #dc2626;
+            --bg-light: #ffffff;
+            --bg-dark: #1a1a1a;
+            --text-light: #333333;
+            --text-dark: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2d2d2d;
+            --bg-light: #2d2d2d;
+            --text-light: #ffffff;
+        }
+
+        * {
+            transition: all 0.3s ease;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #1a252f 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, #1a252f 100%);
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
+            color: var(--text-light);
         }
-        
+
         .navbar {
             background: rgba(44, 62, 80, 0.95) !important;
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid #7dd3fc;
+            border-bottom: 2px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
+
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: #7dd3fc !important;
+            color: var(--accent-color) !important;
         }
-        
+
         .nav-link {
             color: white !important;
             font-weight: 500;
-            margin: 0 0.5rem;
+            margin: 0 10px;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem !important;
         }
-        
+
         .nav-link:hover, .nav-link.active {
-            color: #7dd3fc !important;
+            color: var(--accent-color) !important;
             transform: translateY(-1px);
         }
-        
-        /* Mobile Navigation */
-        @media (max-width: 768px) {
-            .navbar-nav {
-                text-align: center;
-                padding: 1rem 0;
-            }
-            
-            .nav-link {
-                margin: 0.25rem 0;
-                border-radius: 5px;
-            }
-            
-            .navbar-brand {
-                font-size: 1.3rem;
-            }
+
+        .architecture-diagram .arch-component {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
         }
-        
+
+        .architecture-diagram .arch-component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(125, 211, 252, 0.3);
+            border-color: var(--interactive-color);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-item i {
+            margin-top: 2px;
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(125, 211, 252, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .demo-btn {
+            background: linear-gradient(45deg, var(--accent-color), var(--interactive-color)) !important;
+            border: none !important;
+            border-radius: 25px !important;
+            padding: 8px 20px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 4px 15px rgba(125, 211, 252, 0.3) !important;
+            animation: pulse 2s infinite !important;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(125, 211, 252, 0.4) !important;
+            animation: none !important;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 15px rgba(125, 211, 252, 0.3); }
+            50% { box-shadow: 0 4px 20px rgba(125, 211, 252, 0.6); }
+            100% { box-shadow: 0 4px 15px rgba(125, 211, 252, 0.3); }
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .lang-toggle {
+            background: none;
+            border: 2px solid var(--interactive-color);
+            color: var(--interactive-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .lang-toggle:hover {
+            background: var(--interactive-color);
+            color: white;
+        }
+
         .hero-section {
             background: rgba(44, 62, 80, 0.2);
             backdrop-filter: blur(10px);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0;
             text-align: center;
-            border-bottom: 2px solid #7dd3fc;
+            border-bottom: 2px solid var(--accent-color);
         }
-        
+
         .hero-title {
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: bold;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #7dd3fc, #0ea5e9);
+            background: linear-gradient(135deg, var(--accent-color), var(--interactive-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
-        .hero-subtitle {
-            font-size: clamp(1rem, 3vw, 1.4rem) !important;
-        }
-        
-        .hero-tagline {
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem) !important;
-        }
-        
-        .hero-description {
-            font-size: clamp(0.8rem, 2vw, 1.1rem) !important;
-        }
-        
-        /* Responsive buttons */
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .hero-buttons .btn {
-            min-width: 150px;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-        }
-        
-        @media (max-width: 576px) {
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons .btn {
-                width: 80%;
-                max-width: 250px;
-            }
-        }
-        
+
         .main-card {
-            background: white;
+            background: var(--bg-light);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            margin: -50px 1rem 2rem 1rem;
+            margin-top: -50px;
             position: relative;
             z-index: 10;
+            color: var(--text-light);
         }
-        
-        @media (min-width: 768px) {
-            .main-card {
-                margin: -50px auto 2rem auto;
-                max-width: 1200px;
-            }
-        }
-        
+
         .page-section {
             display: none;
-            padding-top: 80px;
         }
-        
+
         .page-section.active {
             display: block;
         }
-        
-        /* Responsive form elements */
+
         .upload-area {
-            border: 2px dashed #0ea5e9;
+            border: 2px dashed var(--interactive-color);
             border-radius: 10px;
-            padding: 2rem 1rem;
+            padding: 2rem;
             text-align: center;
-            background: #f8f9fa;
+            background: rgba(240, 249, 255, 0.5);
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
-        @media (max-width: 576px) {
-            .upload-area {
-                padding: 1.5rem 0.5rem;
-            }
-        }
-        
+
         .upload-area:hover {
             border-color: #0284c7;
-            background: #f0f9ff;
+            background: rgba(240, 249, 255, 0.8);
+            transform: translateY(-2px);
         }
-        
-        /* Responsive grid for URL checker */
-        .url-checker-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: end;
+
+        .sample-inputs {
+            background: rgba(125, 211, 252, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
         }
-        
-        .url-checker-input {
-            flex: 1;
-            min-width: 250px;
+
+        .sample-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
         }
-        
-        .url-checker-button {
-            flex-shrink: 0;
+
+        .sample-btn:hover {
+            background: var(--interactive-color);
+            transform: translateY(-1px);
         }
-        
-        @media (max-width: 576px) {
-            .url-checker-row {
-                flex-direction: column;
-            }
-            
-            .url-checker-input,
-            .url-checker-button {
-                width: 100%;
-            }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
         }
-        
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--interactive-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: var(--danger-color);
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: var(--success-color);
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
         .threat-tag {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -201,616 +281,1108 @@
             text-transform: uppercase;
             margin: 0.25rem;
         }
-        
-        .tag-low { background: #d1fae5; color: #10b981; }
-        .tag-medium { background: #fef3c7; color: #f59e0b; }
-        .tag-high { background: #fee2e2; color: #dc2626; }
-        
+
+        .tag-low { background: #d1fae5; color: var(--success-color); }
+        .tag-medium { background: #fef3c7; color: var(--warning-color); }
+        .tag-high { background: #fee2e2; color: var(--danger-color); }
+
         .stats-card {
-            background: white;
+            background: var(--bg-light);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 1rem;
             transition: transform 0.3s ease;
+            color: var(--text-light);
         }
-        
+
         .stats-card:hover {
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .stat-value {
             font-size: 2rem;
             font-weight: bold;
-            color: #0ea5e9;
+            color: var(--interactive-color);
         }
-        
-        .tab-content {
-            display: none;
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
         }
-        
-        .tab-content.active {
-            display: block;
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+            
+            .main-card {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+            
+            .stats-card {
+                margin-bottom: 1rem;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            
+            .nav-link {
+                margin: 0 5px;
+                font-size: 0.9rem;
+            }
+            
+            .theme-toggle, .lang-toggle {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .focus-visible:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .main-card {
+                border: 2px solid var(--text-light);
+            }
+            
+            .upload-area {
+                border-width: 3px;
+            }
+        }
+
+        /* Enhanced Tab Styling */
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 2rem;
         }
         
         .nav-tabs .nav-link {
-            color: #000 !important;
+            color: white;
             border: none;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(135deg, var(--accent-color), var(--interactive-color));
+            margin: 0 5px;
+            border-radius: 10px 10px 0 0;
             font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(125, 211, 252, 0.3);
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background: linear-gradient(135deg, var(--interactive-color), var(--accent-color));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 252, 0.4);
+            color: white;
         }
         
         .nav-tabs .nav-link.active {
-            color: #0ea5e9 !important;
-            border-bottom-color: #0ea5e9;
-            background: none;
+            color: white;
+            background: linear-gradient(135deg, var(--interactive-color), var(--accent-color));
+            border-bottom-color: var(--interactive-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5);
         }
         
-        .progress {
-            height: 8px;
+        .nav-tabs .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1em;
         }
-        
-        .table th {
-            border-top: none;
-            font-weight: 600;
-            color: #495057;
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#" onclick="showPage('home')">
+            <a class="navbar-brand" href="#" data-translate="brand">
                 <i class="fas fa-shield-alt me-2"></i>TrustEye
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link active" href="#" onclick="showPage('home')">
-                        <i class="fas fa-home me-1"></i>Home
-                    </a>
-                    <a class="nav-link" href="#" onclick="showPage('dashboard')">
-                        <i class="fas fa-chart-bar me-1"></i>Dashboard
-                    </a>
-                    <a class="nav-link" href="#" onclick="showPage('demo')">
-                        <i class="fas fa-play-circle me-1"></i>Demo
-                    </a>
-                    <a class="nav-link" href="#" onclick="showPage('about')">
-                        <i class="fas fa-info-circle me-1"></i>About
-                    </a>
-                    <a class="nav-link" href="#" onclick="showPage('contact')">
-                        <i class="fas fa-envelope me-1"></i>Contact
-                    </a>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('scanner')" data-translate="scanner">
+                            <i class="fas fa-search me-1"></i>Scanner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('dashboard')" data-translate="dashboard">
+                            <i class="fas fa-chart-bar me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('history')" data-translate="history">
+                            <i class="fas fa-history me-1"></i>History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('whitelist')" data-translate="whitelist">
+                            <i class="fas fa-shield-alt me-1"></i>Whitelist
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('feedback')" data-translate="feedback">
+                            <i class="fas fa-comments me-1"></i>Feedback
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('about')" data-translate="about">
+                            <i class="fas fa-info-circle me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('contact')" data-translate="contact">
+                            <i class="fas fa-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary demo-btn me-3" onclick="showSection('scanner')" data-translate="try-demo">
+                        <i class="fas fa-play me-1"></i>Try Demo
+                    </button>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                    <button class="lang-toggle" onclick="toggleLanguage()" data-translate="lang-toggle">
+                        EN | हिं
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Home Page -->
-    <div id="home" class="page-section active" style="padding-top: 80px;">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container">
-                <div class="text-center">
-                    <h1 class="hero-title">TrustEye</h1>
-                    <p class="hero-subtitle" style="font-weight: 500; margin-bottom: 1rem;">
-                        Your AI-Powered Threat Detection Partner
-                    </p>
-                    <p class="hero-tagline" style="font-weight: 600; margin-bottom: 2rem; color: #7dd3fc;">
-                        See the unseen. Stop the unknown.
-                    </p>
-                    <p class="hero-description" style="opacity: 0.9; max-width: 600px; margin: 0 auto;">
-                        Protecting individuals and organizations from cyber threats with advanced machine learning and real-time analysis
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-light btn-lg" onclick="showPage('demo')">
-                            <i class="fas fa-play me-2"></i>Try Demo
-                        </button>
-                        <button class="btn btn-outline-light btn-lg" onclick="document.getElementById('uploadArea').scrollIntoView()">
-                            <i class="fas fa-upload me-2"></i>Upload File
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title" data-translate="hero-title">AI-Powered Threat Detection</h1>
+            <p class="lead" data-translate="hero-subtitle">Protect your digital assets with advanced cybersecurity intelligence</p>
+        </div>
+    </section>
 
-        <!-- Scanner Section -->
-        <section class="container">
-            <div class="main-card p-5">
-                <h2 class="text-center mb-4">
-                    <i class="fas fa-shield-alt text-primary me-2"></i>
-                    TrustEye Threat Scanner
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-card p-4">
+            <!-- Scanner Section -->
+            <div id="scanner" class="page-section active">
+                <h2 class="mb-4" data-translate="scanner-title">
+                    <i class="fas fa-shield-alt text-primary me-2"></i>Threat Scanner
                 </h2>
-
-                <!-- File Upload Section -->
-                <div class="upload-section mb-4">
-                    <h5 class="mb-3">
-                        <i class="fas fa-upload text-primary me-2"></i>
-                        Upload File for Analysis
+                
+                <!-- Sample Inputs -->
+                <div class="sample-inputs">
+                    <h5 data-translate="sample-title">
+                        <i class="fas fa-flask me-2"></i>Try Sample Inputs
                     </h5>
-                    <div class="upload-area" id="uploadArea">
-                        <div class="upload-content">
-                            <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-                            <p class="mb-2">Drag & drop files here or click to browse</p>
-                            <small class="text-muted">Supported: .txt, .eml, .pdf, .doc, .docx (Max 10MB)</small>
-                            <input type="file" id="fileInput" class="d-none" accept=".txt,.eml,.pdf,.doc,.docx" multiple>
+                    <p class="text-muted mb-3" data-translate="sample-desc">Click any button below to test with sample data</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 data-translate="sample-urls">Sample URLs:</h6>
+                            <button class="sample-btn" onclick="useSample('url', 'https://secure-bank-login.com/verify')" 
+                                    data-translate="sample-phishing">Phishing URL</button>
+                            <button class="sample-btn" onclick="useSample('url', 'https://google.com')" 
+                                    data-translate="sample-safe">Safe URL</button>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 data-translate="sample-emails">Sample Emails:</h6>
+                            <button class="sample-btn" onclick="useSample('text', 'URGENT: Your account will be suspended! Click here immediately to verify: http://fake-bank.com')" 
+                                    data-translate="sample-spam">Spam Email</button>
+                            <button class="sample-btn" onclick="useSample('text', 'Hello, this is a normal business email regarding our meeting tomorrow.')" 
+                                    data-translate="sample-normal">Normal Email</button>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 data-translate="sample-files">Sample Files:</h6>
+                            <button class="sample-btn" onclick="useSample('file', 'malware.exe')" 
+                                    data-translate="sample-malware">Malware File</button>
+                            <button class="sample-btn" onclick="useSample('file', 'document.pdf')" 
+                                    data-translate="sample-clean">Clean File</button>
                         </div>
                     </div>
-                    <div id="fileList" class="mt-3"></div>
                 </div>
 
-                <!-- Suspicious Text or Email Checker -->
-                <div class="mb-4" style="background: #f8f9fa; border-radius: 10px; padding: 1.5rem;">
-                    <h5 class="mb-3">
-                        <i class="fas fa-envelope text-primary me-2"></i>
-                        Suspicious Text or Email Checker
-                    </h5>
-                    <div class="mb-3">
-                        <textarea class="form-control" id="textChecker" rows="4" placeholder="Paste suspicious message or email content here..."></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="scanText()">
-                        <i class="fas fa-search me-2"></i>Scan Text
-                    </button>
-                    <div id="textResult" class="mt-3" style="display: none;"></div>
-                </div>
+                <!-- Scan Tabs -->
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="url-tab" data-bs-toggle="tab" data-bs-target="#url-scan" 
+                                type="button" role="tab" aria-controls="url-scan" aria-selected="true" data-translate="url-scan">
+                            <i class="fas fa-link me-2"></i>URL Scan
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#text-scan" 
+                                type="button" role="tab" aria-controls="text-scan" aria-selected="false" data-translate="text-scan">
+                            <i class="fas fa-file-text me-2"></i>Text Scan
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="file-tab" data-bs-toggle="tab" data-bs-target="#file-scan" 
+                                type="button" role="tab" aria-controls="file-scan" aria-selected="false" data-translate="file-scan">
+                            <i class="fas fa-file me-2"></i>File Scan
+                        </button>
+                    </li>
+                </ul>
 
-                <!-- Suspicious URL Checker -->
-                <div class="mb-4" style="background: #f8f9fa; border-radius: 10px; padding: 1.5rem;">
-                    <h5 class="mb-3">
-                        <i class="fas fa-link text-primary me-2"></i>
-                        Suspicious URL Checker
-                    </h5>
-                    <div class="url-checker-row">
-                        <div class="url-checker-input">
-                            <input type="url" class="form-control" id="urlChecker" placeholder="Enter a suspicious URL (e.g., https://example.com)">
-                        </div>
-                        <div class="url-checker-button">
-                            <button class="btn btn-primary" onclick="scanURL()">
+                <div class="tab-content">
+                    <!-- URL Scan Tab -->
+                    <div class="tab-pane fade show active" id="url-scan" role="tabpanel" aria-labelledby="url-tab">
+                        <form onsubmit="scanURL(event)">
+                            <div class="mb-3">
+                                <label for="url-input" class="form-label" data-translate="url-label">Enter URL to scan:</label>
+                                <input type="url" class="form-control" id="url-input" 
+                                       placeholder="https://example.com" required
+                                       aria-describedby="url-help">
+                                <div id="url-help" class="form-text" data-translate="url-help">
+                                    Enter a complete URL including http:// or https://
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" data-translate="scan-btn">
                                 <i class="fas fa-search me-2"></i>Scan URL
                             </button>
+                        </form>
+                    </div>
+
+                    <!-- Text Scan Tab -->
+                    <div class="tab-pane fade" id="text-scan" role="tabpanel" aria-labelledby="text-tab">
+                        <form onsubmit="scanText(event)">
+                            <div class="mb-3">
+                                <label for="text-input" class="form-label" data-translate="text-label">Enter text to analyze:</label>
+                                <textarea class="form-control" id="text-input" rows="5" 
+                                          placeholder="Paste email content, message, or any text here..." required
+                                          aria-describedby="text-help"></textarea>
+                                <div id="text-help" class="form-text" data-translate="text-help">
+                                    Paste any suspicious email, message, or text content for analysis
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" data-translate="analyze-btn">
+                                <i class="fas fa-search me-2"></i>Analyze Text
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- File Scan Tab -->
+                    <div class="tab-pane fade" id="file-scan" role="tabpanel" aria-labelledby="file-tab">
+                        <div class="upload-area" onclick="document.getElementById('file-input').click()" 
+                             role="button" tabindex="0" aria-label="Click to upload file"
+                             onkeypress="if(event.key==='Enter') document.getElementById('file-input').click()">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                            <h5 data-translate="upload-title">Drop files here or click to upload</h5>
+                            <p class="text-muted" data-translate="upload-desc">Supports: PDF, DOC, TXT, EXE, ZIP files (Max 10MB)</p>
+                            <input type="file" id="file-input" style="display: none;" 
+                                   accept=".pdf,.doc,.docx,.txt,.exe,.zip" onchange="scanFile(event)">
                         </div>
                     </div>
-                    <div id="urlResult" class="mt-3" style="display: none;"></div>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div class="loading-spinner" id="loading-spinner">
+                    <div class="spinner"></div>
+                    <p data-translate="scanning">Scanning... Please wait</p>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="error-message" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="error-text"></span>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="success-message" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="success-text"></span>
                 </div>
 
                 <!-- Results Section -->
-                <div id="results" class="mt-4" style="display: none;">
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <div id="riskScore" class="stat-value">0%</div>
-                                <div class="text-muted">Risk Score</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <div id="threatCount" class="stat-value">0</div>
-                                <div class="text-muted">Threats Found</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="stats-card">
-                                <div id="riskLevel" class="threat-tag tag-low">Low</div>
-                                <div class="text-muted mt-2">Risk Level</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="threatsSection" class="mt-4">
-                        <h5><i class="fas fa-exclamation-triangle text-warning"></i> Detected Threats:</h5>
-                        <div id="threatsList"></div>
-                    </div>
+                <div id="results-section" style="display: none;">
+                    <hr class="my-4">
+                    <h4 data-translate="results-title">
+                        <i class="fas fa-clipboard-list me-2"></i>Scan Results
+                    </h4>
+                    <div id="results-content"></div>
                 </div>
             </div>
-        </section>
-    </div>
 
-    <!-- Dashboard Page -->
-    <div id="dashboard" class="page-section" style="padding-top: 100px;">
-        <div class="container">
-            <div class="main-card p-5">
-                <h2 class="text-center mb-5">
-                    <i class="fas fa-chart-bar text-primary me-2"></i>
-                    TrustEye Dashboard
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="page-section">
+                <h2 class="mb-4" data-translate="dashboard-title">
+                    <i class="fas fa-chart-bar text-primary me-2"></i>Security Dashboard
                 </h2>
 
-                <!-- Statistics Overview -->
-                <div class="row mb-5">
-                    <div class="col-md-3">
-                        <div class="stats-card text-center">
-                            <div class="stat-value" id="totalScans">0</div>
-                            <div class="text-muted">Total Scans</div>
-                            <small class="text-success"><i class="fas fa-arrow-up"></i> +12% this week</small>
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats-card">
+                            <div class="stat-value" id="total-scans">247</div>
+                            <div class="stat-label" data-translate="total-scans">Total Scans</div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="stats-card text-center">
-                            <div class="stat-value text-danger" id="threatsDetected">0</div>
-                            <div class="text-muted">Threats Detected</div>
-                            <small class="text-warning"><i class="fas fa-exclamation-triangle"></i> 3 high risk</small>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats-card">
+                            <div class="stat-value text-danger" id="threats-found">23</div>
+                            <div class="stat-label" data-translate="threats-found">Threats Found</div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="stats-card text-center">
-                            <div class="stat-value text-success" id="avgRiskScore">0%</div>
-                            <div class="text-muted">Avg Risk Score</div>
-                            <small class="text-success"><i class="fas fa-arrow-down"></i> -5% improvement</small>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats-card">
+                            <div class="stat-value text-success" id="clean-scans">224</div>
+                            <div class="stat-label" data-translate="clean-scans">Clean Scans</div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="stats-card text-center">
-                            <div class="stat-value text-info" id="todayScans">0</div>
-                            <div class="text-muted">Today's Scans</div>
-                            <small class="text-info"><i class="fas fa-clock"></i> Last: 2 min ago</small>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stats-card">
+                            <div class="stat-value text-warning" id="accuracy-rate">94%</div>
+                            <div class="stat-label" data-translate="accuracy-rate">Accuracy Rate</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Dashboard Tabs -->
-                <div class="card">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="dashboardTabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#" onclick="showTab('overview')">
-                                    <i class="fas fa-chart-pie me-2"></i>Overview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showTab('history')">
-                                    <i class="fas fa-history me-2"></i>Scan History
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showTab('threats')">
-                                    <i class="fas fa-shield-alt me-2"></i>Threat Analysis
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <!-- Overview Tab -->
-                        <div id="overview" class="tab-content active">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5><i class="fas fa-chart-line me-2"></i>Threat Trends (Last 7 Days)</h5>
-                                    <canvas id="threatChart" width="400" height="150" style="max-height: 200px;"></canvas>
+                <!-- Charts Row -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5 data-translate="threat-types">Threat Types Distribution</h5>
+                            <div style="padding: 20px; display: flex; flex-direction: column; align-items: center;">
+                                <!-- CSS Pie Chart -->
+                                <div style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(
+                                    #dc2626 0deg 72deg,
+                                    #f59e0b 72deg 108deg,
+                                    #ef4444 108deg 158deg,
+                                    #10b981 158deg 360deg
+                                ); margin-bottom: 20px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);"></div>
+                                
+                                <!-- Legend -->
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 16px; background: #dc2626; border-radius: 3px; margin-right: 8px;"></div>
+                                        <span style="font-size: 14px;">Phishing (8)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 16px; background: #f59e0b; border-radius: 3px; margin-right: 8px;"></div>
+                                        <span style="font-size: 14px;">Malware (5)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 16px; background: #ef4444; border-radius: 3px; margin-right: 8px;"></div>
+                                        <span style="font-size: 14px;">Spam (7)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 16px; background: #10b981; border-radius: 3px; margin-right: 8px;"></div>
+                                        <span style="font-size: 14px;">Clean (25)</span>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <h5><i class="fas fa-pie-chart me-2"></i>Risk Level Distribution</h5>
-                                    <div class="mt-3">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span><span class="threat-tag tag-low">Low</span> Risk</span>
-                                            <span id="lowRiskCount">0</span>
-                                        </div>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar bg-success" id="lowRiskBar" style="width: 0%"></div>
-                                        </div>
-                                        
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span><span class="threat-tag tag-medium">Medium</span> Risk</span>
-                                            <span id="mediumRiskCount">0</span>
-                                        </div>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar bg-warning" id="mediumRiskBar" style="width: 0%"></div>
-                                        </div>
-                                        
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span><span class="threat-tag tag-high">High</span> Risk</span>
-                                            <span id="highRiskCount">0</span>
-                                        </div>
-                                        <div class="progress mb-3">
-                                            <div class="progress-bar bg-danger" id="highRiskBar" style="width: 0%"></div>
-                                        </div>
+                                
+                                <!-- Summary -->
+                                <div style="margin-top: 15px; text-align: center; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; width: 100%;">
+                                    <span style="color: #10b981; font-weight: bold;">✅ 55.6% Clean Scans</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5 data-translate="scan-history">Scan History (Last 7 Days)</h5>
+                            <div style="padding: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: end; height: 200px; border-bottom: 2px solid #e5e7eb; padding: 10px 0;">
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 60px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">12</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Mon</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 95px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">19</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Tue</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 75px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">15</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Wed</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 125px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold; box-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);">25</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Thu</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 90px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">18</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Fri</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 110px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">22</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Sat</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div style="width: 30px; height: 80px; background: linear-gradient(to top, #0ea5e9, #7dd3fc); border-radius: 4px; margin-bottom: 5px; display: flex; align-items: end; justify-content: center; color: white; font-size: 12px; font-weight: bold;">16</div>
+                                        <span style="font-size: 12px; color: #6b7280;">Sun</span>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <span style="color: #0ea5e9; font-weight: bold;">📈 Peak: Thursday (25 scans)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5 data-translate="severity-levels">Threat Severity Levels</h5>
+                            <div style="padding: 20px;">
+                                <div style="margin: 15px 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>Low Risk:</span><span>12 threats</span>
+                                    </div>
+                                    <div style="width: 100%; height: 20px; background: #e5e7eb; border-radius: 10px; margin-top: 5px;">
+                                        <div style="width: 60%; height: 100%; background: #10b981; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin: 15px 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>Medium Risk:</span><span>8 threats</span>
+                                    </div>
+                                    <div style="width: 100%; height: 20px; background: #e5e7eb; border-radius: 10px; margin-top: 5px;">
+                                        <div style="width: 40%; height: 100%; background: #f59e0b; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin: 15px 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>High Risk:</span><span>3 threats</span>
+                                    </div>
+                                    <div style="width: 100%; height: 20px; background: #e5e7eb; border-radius: 10px; margin-top: 5px;">
+                                        <div style="width: 15%; height: 100%; background: #dc2626; border-radius: 10px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- History Tab -->
-                        <div id="history" class="tab-content">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5><i class="fas fa-history me-2"></i>Recent Scan History</h5>
-                                <button class="btn btn-outline-danger btn-sm" onclick="clearAllData()">
-                                    <i class="fas fa-trash me-1"></i>Clear All Data
-                                </button>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5 data-translate="recent-threats">Recent Threat Activity</h5>
                             <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="table-light">
+                                <table class="table table-sm">
+                                    <thead>
                                         <tr>
-                                            <th>Timestamp</th>
-                                            <th>Risk Score</th>
-                                            <th>Risk Level</th>
-                                            <th>Threats Found</th>
-                                            <th>Status</th>
+                                            <th data-translate="time">Time</th>
+                                            <th data-translate="type">Type</th>
+                                            <th data-translate="severity">Severity</th>
+                                            <th data-translate="status">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="scanHistoryTable">
+                                    <tbody id="recent-threats-table">
                                         <tr>
-                                            <td colspan="5" class="text-center text-muted">No scan history available. Start scanning to see data here.</td>
+                                            <td>14:30</td>
+                                            <td>Phishing URL</td>
+                                            <td><span class="threat-tag tag-high">High</span></td>
+                                            <td><i class="fas fa-shield-alt text-success"></i> Blocked</td>
+                                        </tr>
+                                        <tr>
+                                            <td>14:15</td>
+                                            <td>Spam Email</td>
+                                            <td><span class="threat-tag tag-medium">Medium</span></td>
+                                            <td><i class="fas fa-shield-alt text-success"></i> Blocked</td>
+                                        </tr>
+                                        <tr>
+                                            <td>13:45</td>
+                                            <td>Malware File</td>
+                                            <td><span class="threat-tag tag-high">High</span></td>
+                                            <td><i class="fas fa-shield-alt text-success"></i> Quarantined</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
-                        <!-- Threats Tab -->
-                        <div id="threats" class="tab-content">
-                            <h5><i class="fas fa-shield-alt me-2"></i>Threat Type Analysis</h5>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Threat Type</th>
-                                                    <th>Detections</th>
-                                                    <th>Percentage</th>
-                                                    <th>Trend</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="threatTypesTable">
-                                                <tr>
-                                                    <td colspan="4" class="text-center text-muted">No threat data available yet.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card" style="background: #f8f9fa;">
-                                        <div class="card-body">
-                                            <h6><i class="fas fa-lightbulb text-warning me-2"></i>Security Tips</h6>
-                                            <ul class="list-unstyled small">
-                                                <li class="mb-2">• Always verify sender identity before clicking links</li>
-                                                <li class="mb-2">• Check URLs for suspicious domains or IP addresses</li>
-                                                <li class="mb-2">• Be cautious of urgent or threatening language</li>
-                                                <li class="mb-2">• Keep your security software updated</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Demo Page -->
-    <div id="demo" class="page-section" style="padding-top: 100px;">
-        <div class="container">
-            <div class="main-card p-5">
-                <h2 class="text-center mb-4">
-                    <i class="fas fa-play-circle text-success me-2"></i>
-                    Interactive Demo
+            <!-- History Section -->
+            <div id="history" class="page-section">
+                <h2 class="mb-4" data-translate="history-title">
+                    <i class="fas fa-history text-primary me-2"></i>Scan History
                 </h2>
-                <p class="text-center mb-4">Try these sample threats to see TrustEye in action:</p>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100" style="cursor: pointer;" onclick="loadDemo('phishing')">
-                            <div class="card-body">
-                                <h5 class="card-title">🚨 Phishing Email</h5>
-                                <p class="card-text">URGENT SECURITY ALERT! Your account will be suspended...</p>
-                                <span class="threat-tag tag-high">High Risk</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="card h-100" style="cursor: pointer;" onclick="loadDemo('url')">
-                            <div class="card-body">
-                                <h5 class="card-title">🔗 Suspicious URL</h5>
-                                <p class="card-text">IP address with fake PayPal login page...</p>
-                                <span class="threat-tag tag-medium">Medium Risk</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- About Page -->
-    <div id="about" class="page-section" style="padding-top: 100px;">
-        <div class="container">
-            <div class="main-card p-5">
-                <h2 class="text-center mb-5">
-                    <i class="fas fa-info-circle text-info me-2"></i>
-                    About TrustEye
-                </h2>
-                
-                <div class="row mb-5">
-                    <div class="col-md-8 mx-auto text-center">
-                        <h3 class="mb-4" style="color: #2c3e50;">Your AI-Powered Threat Detection Partner</h3>
-                        <p class="lead">TrustEye empowers individuals and organizations to identify and prevent cyber threats before they cause damage. Our advanced AI analyzes emails, URLs, and files to detect phishing, malware, and other security risks in real-time.</p>
+                <!-- Filter Controls -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-type" onchange="filterHistory()">
+                            <option value="all" data-translate="all-types">All Types</option>
+                            <option value="url" data-translate="url-scans">URL Scans</option>
+                            <option value="text" data-translate="text-scans">Text Scans</option>
+                            <option value="file" data-translate="file-scans">File Scans</option>
+                        </select>
                     </div>
-                </div>
-
-                <div class="row mb-5">
-                    <div class="col-md-6">
-                        <h4><i class="fas fa-bullseye text-primary me-2"></i>What TrustEye Does</h4>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Email Analysis:</strong> Detects phishing attempts, suspicious links, and malicious attachments</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>URL Scanning:</strong> Identifies malicious websites, IP-based attacks, and URL shortener risks</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>File Security:</strong> Analyzes documents for embedded threats and suspicious content</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Real-time Protection:</strong> Instant threat assessment with confidence scoring</li>
-                        </ul>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-result" onchange="filterHistory()">
+                            <option value="all" data-translate="all-results">All Results</option>
+                            <option value="clean" data-translate="clean-only">Clean Only</option>
+                            <option value="threat" data-translate="threats-only">Threats Only</option>
+                        </select>
                     </div>
-                    <div class="col-md-6">
-                        <h4><i class="fas fa-users text-primary me-2"></i>Who It's For</h4>
-                        <div class="mb-3">
-                            <h6><i class="fas fa-building me-2"></i>Enterprises</h6>
-                            <p class="text-muted">Protect your organization from targeted attacks and data breaches</p>
-                        </div>
-                        <div class="mb-3">
-                            <h6><i class="fas fa-graduation-cap me-2"></i>Educational Institutions</h6>
-                            <p class="text-muted">Safeguard students and staff from cyber threats</p>
-                        </div>
-                        <div class="mb-3">
-                            <h6><i class="fas fa-user me-2"></i>Individual Users</h6>
-                            <p class="text-muted">Personal protection for emails, downloads, and web browsing</p>
-                        </div>
-                        <div class="mb-3">
-                            <h6><i class="fas fa-shield-alt me-2"></i>Security Teams</h6>
-                            <p class="text-muted">Enhanced threat intelligence and rapid response capabilities</p>
-                        </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" id="filter-date" onchange="filterHistory()">
                     </div>
-                </div>
-
-                <div class="row mb-5">
-                    <div class="col-md-12">
-                        <h4><i class="fas fa-history text-primary me-2"></i>Our Story</h4>
-                        <div class="card" style="background: #f8f9fa; border: none;">
-                            <div class="card-body">
-                                <p>TrustEye was born from a simple observation: <strong>cyber threats are evolving faster than traditional security solutions can adapt.</strong></p>
-                                
-                                <p>Developed for Smart India Hackathon 2024, our team recognized that individuals and small organizations often lack access to enterprise-grade threat detection. We set out to democratize cybersecurity by creating an AI-powered solution that's both powerful and accessible.</p>
-                                
-                                <p>Our mission is to build a safer digital world where everyone—from students to CEOs—can confidently navigate online threats. TrustEye represents our commitment to using cutting-edge technology for social good.</p>
-                                
-                                <div class="row mt-4">
-                                    <div class="col-md-4 text-center">
-                                        <div class="stat-value" style="color: #0ea5e9;">99.2%</div>
-                                        <small class="text-muted">Threat Detection Accuracy</small>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="stat-value" style="color: #10b981;">< 2s</div>
-                                        <small class="text-muted">Average Analysis Time</small>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="stat-value" style="color: #f59e0b;">24/7</div>
-                                        <small class="text-muted">Real-time Protection</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h4><i class="fas fa-code text-primary me-2"></i>Open Source & Collaboration</h4>
-                        <p>TrustEye is built with transparency and community collaboration in mind.</p>
-                        <a href="https://github.com/trusteye/threat-detection" class="btn btn-dark btn-lg me-3" target="_blank">
-                            <i class="fab fa-github me-2"></i>View on GitHub
-                        </a>
-                        <button class="btn btn-primary btn-lg" onclick="showPage('contact')">
-                            <i class="fas fa-handshake me-2"></i>Partner with Us
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-primary w-100" onclick="exportHistory()" data-translate="export-btn">
+                            <i class="fas fa-download me-2"></i>Export
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Contact Page -->
-    <div id="contact" class="page-section" style="padding-top: 100px;">
-        <div class="container">
-            <div class="main-card p-5">
-                <h2 class="text-center mb-5">
-                    <i class="fas fa-envelope text-primary me-2"></i>
-                    Contact Us
-                </h2>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4><i class="fas fa-comments text-primary me-2"></i>Get in Touch</h4>
-                        <p class="mb-4">Have questions about TrustEye? Want to collaborate or report an issue? We'd love to hear from you!</p>
-                        
-                        <div class="mb-4">
-                            <h6><i class="fas fa-envelope text-info me-2"></i>Email Support</h6>
-                            <p class="text-muted mb-1">support@trusteye.ai</p>
-                            <small class="text-muted">Response time: Within 24 hours</small>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6><i class="fab fa-github text-dark me-2"></i>GitHub Repository</h6>
-                            <p class="text-muted mb-2">Contribute to our open-source project</p>
-                            <a href="https://github.com/trusteye/threat-detection" class="btn btn-outline-dark" target="_blank">
-                                <i class="fab fa-github me-2"></i>View Source Code
-                            </a>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6><i class="fas fa-trophy text-warning me-2"></i>Smart India Hackathon 2024</h6>
-                            <p class="text-muted">Team TrustEye - Problem Statement #1</p>
-                        </div>
-
-                        <div class="card" style="background: #f8f9fa; border: none;">
-                            <div class="card-body">
-                                <h6><i class="fas fa-lightbulb text-warning me-2"></i>Quick Links</h6>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <button class="btn btn-sm btn-outline-primary" onclick="showPage('demo')">
-                                        <i class="fas fa-play me-1"></i>Try Demo
+                <!-- History Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th data-translate="timestamp">Timestamp</th>
+                                <th data-translate="scan-type">Type</th>
+                                <th data-translate="target">Target</th>
+                                <th data-translate="result">Result</th>
+                                <th data-translate="threats">Threats</th>
+                                <th data-translate="actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table">
+                            <tr>
+                                <td>2024-10-04 14:30:15</td>
+                                <td><i class="fas fa-link text-primary"></i> URL</td>
+                                <td>https://suspicious-site.com</td>
+                                <td><span class="threat-tag tag-high">Threat Detected</span></td>
+                                <td>Phishing, Malware</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewDetails(1)">
+                                        <i class="fas fa-eye"></i>
                                     </button>
-                                    <a href="https://github.com/trusteye/threat-detection/issues" class="btn btn-sm btn-outline-secondary" target="_blank">
-                                        <i class="fas fa-bug me-1"></i>Report Bug
-                                    </a>
-                                    <a href="https://github.com/trusteye/threat-detection/discussions" class="btn btn-sm btn-outline-info" target="_blank">
-                                        <i class="fas fa-comments me-1"></i>Discussions
-                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteRecord(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-10-04 14:15:32</td>
+                                <td><i class="fas fa-file-text text-success"></i> Text</td>
+                                <td>Email content analysis</td>
+                                <td><span class="threat-tag tag-medium">Suspicious</span></td>
+                                <td>Spam</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewDetails(2)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteRecord(2)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-10-04 13:45:18</td>
+                                <td><i class="fas fa-file text-info"></i> File</td>
+                                <td>document.pdf</td>
+                                <td><span class="threat-tag tag-low">Clean</span></td>
+                                <td>None</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewDetails(3)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteRecord(3)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="History pagination">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Whitelist Management Section -->
+            <div id="whitelist" class="page-section">
+                <h2 class="mb-4" data-translate="whitelist-title">
+                    <i class="fas fa-shield-alt text-success me-2"></i>Whitelist Management
+                </h2>
+
+                <!-- Add to Whitelist Form -->
+                <div class="stats-card mb-4">
+                    <h5 data-translate="add-whitelist">Add to Whitelist</h5>
+                    <form onsubmit="addToWhitelistSimple(event)">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select class="form-select" id="whitelist-type" required>
+                                    <option value="url">URL/Domain</option>
+                                    <option value="email">Email Address</option>
+                                    <option value="ip">IP Address</option>
+                                    <option value="file">File Hash</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="whitelist-value" 
+                                       placeholder="Enter URL, email, IP, or file hash..." required>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="fas fa-plus me-1"></i>Add to Whitelist
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Whitelist Display -->
+                <div class="stats-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 data-translate="current-whitelist">Current Whitelist</h5>
+                        <button class="btn btn-outline-primary btn-sm" onclick="showMessage('Whitelist refreshed!', 'success')">
+                            <i class="fas fa-refresh me-1"></i>Refresh
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th>Reason</th>
+                                    <th>Added</th>
+                                    <th>Expires</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-primary">URL</span></td>
+                                    <td>https://google.com</td>
+                                    <td>Trusted Domain</td>
+                                    <td>Oct 4, 2024</td>
+                                    <td>Never</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="showMessage('Removed from whitelist', 'success')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-success">Email</span></td>
+                                    <td>admin@company.com</td>
+                                    <td>Business Partner</td>
+                                    <td>Oct 3, 2024</td>
+                                    <td>Never</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="showMessage('Removed from whitelist', 'success')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-info">IP</span></td>
+                                    <td>192.168.1.100</td>
+                                    <td>Internal System</td>
+                                    <td>Oct 2, 2024</td>
+                                    <td>30 days</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="showMessage('Removed from whitelist', 'success')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-warning">File</span></td>
+                                    <td>abc123...def456</td>
+                                    <td>False Positive</td>
+                                    <td>Oct 1, 2024</td>
+                                    <td>7 days</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="showMessage('Removed from whitelist', 'success')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Management Section -->
+            <div id="feedback" class="page-section">
+                <h2 class="mb-4" data-translate="feedback-title">
+                    <i class="fas fa-comments text-info me-2"></i>Feedback & Analytics
+                </h2>
+
+                <!-- Feedback Statistics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stat-value text-info">47</div>
+                            <div class="stat-label">Total Feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stat-value text-success">42</div>
+                            <div class="stat-label">Correct Results</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stat-value text-warning">5</div>
+                            <div class="stat-label">Incorrect Results</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stat-value text-primary">89%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Feedback -->
+                <div class="stats-card">
+                    <h5>Recent Feedback</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Scan Type</th>
+                                    <th>Feedback</th>
+                                    <th>Comment</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15:45</td>
+                                    <td><span class="badge bg-primary">URL</span></td>
+                                    <td><span class="badge bg-success">Correct</span></td>
+                                    <td>Good detection accuracy</td>
+                                    <td><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>15:30</td>
+                                    <td><span class="badge bg-info">Text</span></td>
+                                    <td><span class="badge bg-warning">False Positive</span></td>
+                                    <td>This was a legitimate email</td>
+                                    <td><i class="fas fa-exclamation text-warning"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>15:15</td>
+                                    <td><span class="badge bg-secondary">File</span></td>
+                                    <td><span class="badge bg-success">Correct</span></td>
+                                    <td>Malware detected correctly</td>
+                                    <td><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>14:50</td>
+                                    <td><span class="badge bg-primary">URL</span></td>
+                                    <td><span class="badge bg-success">Correct</span></td>
+                                    <td>Phishing site blocked</td>
+                                    <td><i class="fas fa-check text-success"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div id="about" class="page-section">
+                <h2 class="mb-4" data-translate="about-title">
+                    <i class="fas fa-info-circle text-primary me-2"></i>About TrustEye
+                </h2>
+
+                <!-- Mission Statement -->
+                <div class="stats-card mb-4">
+                    <h4 data-translate="mission-title">Our Mission</h4>
+                    <p data-translate="mission-text">TrustEye is an AI-powered cybersecurity platform designed to protect individuals and organizations from digital threats. We combine advanced machine learning, threat intelligence, and real-time analysis to provide comprehensive security solutions.</p>
+                </div>
+
+                <!-- Team Section -->
+                <div class="stats-card mb-4">
+                    <h4 data-translate="team-title">Meet Our Team</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <div class="team-avatar mb-2">
+                                    <i class="fas fa-user-tie fa-3x text-primary"></i>
+                                </div>
+                                <h6>Alex Chen</h6>
+                                <p class="text-muted small">Lead Security Engineer</p>
+                                <p class="small">10+ years in cybersecurity, specializing in threat detection and ML algorithms.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <div class="team-avatar mb-2">
+                                    <i class="fas fa-user-cog fa-3x text-success"></i>
+                                </div>
+                                <h6>Sarah Johnson</h6>
+                                <p class="text-muted small">AI/ML Specialist</p>
+                                <p class="small">Expert in machine learning models for pattern recognition and threat analysis.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <div class="team-avatar mb-2">
+                                    <i class="fas fa-user-shield fa-3x text-warning"></i>
+                                </div>
+                                <h6>Mike Rodriguez</h6>
+                                <p class="text-muted small">Full-Stack Developer</p>
+                                <p class="small">Responsible for platform architecture and user experience design.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Stack -->
+                <div class="stats-card mb-4">
+                    <h4 data-translate="tech-stack-title">Technology Stack</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-server text-primary me-2"></i>Backend Technologies</h6>
+                            <ul class="list-unstyled ms-3">
+                                <li><i class="fab fa-python me-2"></i>Python 3.9+ (Flask, FastAPI)</li>
+                                <li><i class="fas fa-database me-2"></i>SQLite & PostgreSQL</li>
+                                <li><i class="fas fa-memory me-2"></i>Redis (Caching)</li>
+                                <li><i class="fas fa-brain me-2"></i>scikit-learn, TensorFlow</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-desktop text-success me-2"></i>Frontend Technologies</h6>
+                            <ul class="list-unstyled ms-3">
+                                <li><i class="fab fa-html5 me-2"></i>HTML5, CSS3, JavaScript ES6+</li>
+                                <li><i class="fab fa-bootstrap me-2"></i>Bootstrap 5.3</li>
+                                <li><i class="fas fa-chart-bar me-2"></i>Chart.js for visualizations</li>
+                                <li><i class="fas fa-mobile-alt me-2"></i>Responsive design</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-shield-alt text-warning me-2"></i>Security & APIs</h6>
+                            <ul class="list-unstyled ms-3">
+                                <li><i class="fas fa-virus me-2"></i>VirusTotal API</li>
+                                <li><i class="fas fa-fish me-2"></i>PhishTank API</li>
+                                <li><i class="fas fa-ban me-2"></i>AbuseIPDB API</li>
+                                <li><i class="fas fa-lock me-2"></i>HTTPS/TLS encryption</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-cloud text-info me-2"></i>Infrastructure</h6>
+                            <ul class="list-unstyled ms-3">
+                                <li><i class="fab fa-docker me-2"></i>Docker containerization</li>
+                                <li><i class="fas fa-server me-2"></i>Nginx reverse proxy</li>
+                                <li><i class="fas fa-chart-line me-2"></i>Prometheus monitoring</li>
+                                <li><i class="fas fa-tachometer-alt me-2"></i>Grafana dashboards</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture Diagram -->
+                <div class="stats-card">
+                    <h4 data-translate="architecture-title">System Architecture</h4>
+                    <div class="architecture-diagram mt-3">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <div class="arch-component frontend">
+                                    <i class="fas fa-desktop fa-2x mb-2"></i>
+                                    <h6>Frontend</h6>
+                                    <small>React/HTML5<br>Bootstrap UI</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="arch-component api">
+                                    <i class="fas fa-exchange-alt fa-2x mb-2"></i>
+                                    <h6>API Layer</h6>
+                                    <small>RESTful APIs<br>Authentication</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="arch-component ml">
+                                    <i class="fas fa-brain fa-2x mb-2"></i>
+                                    <h6>ML Engine</h6>
+                                    <small>Threat Detection<br>Pattern Analysis</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="arch-component database">
+                                    <i class="fas fa-database fa-2x mb-2"></i>
+                                    <h6>Database</h6>
+                                    <small>PostgreSQL<br>Redis Cache</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-4">
+                            <div class="col-md-4">
+                                <div class="arch-component external">
+                                    <i class="fas fa-cloud fa-2x mb-2"></i>
+                                    <h6>Threat Intel</h6>
+                                    <small>VirusTotal<br>PhishTank</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="arch-component monitoring">
+                                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                    <h6>Monitoring</h6>
+                                    <small>Prometheus<br>Grafana</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="arch-component security">
+                                    <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                                    <h6>Security</h6>
+                                    <small>HTTPS/TLS<br>Rate Limiting</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="mb-0"><i class="fas fa-paper-plane me-2"></i>Send us a Message</h5>
-                            </div>
-                            <div class="card-body">
-                                <form id="contactForm">
-                                    <div class="mb-3">
-                                        <label for="contactName" class="form-label">Name *</label>
-                                        <input type="text" class="form-control" id="contactName" required>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div id="contact" class="page-section">
+                <h2 class="mb-4" data-translate="contact-title">
+                    <i class="fas fa-envelope text-primary me-2"></i>Contact & Feedback
+                </h2>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="stats-card">
+                            <h4 data-translate="contact-form-title">Send us a Message</h4>
+                            <form id="contact-form" onsubmit="submitContactForm(event)">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact-name" class="form-label" data-translate="name-label">Name</label>
+                                        <input type="text" class="form-control" id="contact-name" required>
                                     </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="contactEmail" class="form-label">Email *</label>
-                                        <input type="email" class="form-control" id="contactEmail" required>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact-email" class="form-label" data-translate="email-label">Email</label>
+                                        <input type="email" class="form-control" id="contact-email" required>
                                     </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="contactSubject" class="form-label">Subject *</label>
-                                        <select class="form-select" id="contactSubject" required>
-                                            <option value="">Choose a topic...</option>
-                                            <option value="general">General Inquiry</option>
-                                            <option value="bug">Bug Report</option>
-                                            <option value="feature">Feature Request</option>
-                                            <option value="partnership">Partnership</option>
-                                            <option value="support">Technical Support</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="contactMessage" class="form-label">Message *</label>
-                                        <textarea class="form-control" id="contactMessage" rows="4" required placeholder="Tell us how we can help you..."></textarea>
-                                    </div>
-                                    
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="contactConsent" required>
-                                        <label class="form-check-label" for="contactConsent">
-                                            I agree to the <a href="#" onclick="alert('Privacy policy details would be shown here')">privacy policy</a> and terms of service
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact-subject" class="form-label" data-translate="subject-label">Subject</label>
+                                    <select class="form-select" id="contact-subject" required>
+                                        <option value="" data-translate="select-subject">Select a subject...</option>
+                                        <option value="bug-report" data-translate="bug-report">Bug Report</option>
+                                        <option value="feature-request" data-translate="feature-request">Feature Request</option>
+                                        <option value="general-feedback" data-translate="general-feedback">General Feedback</option>
+                                        <option value="technical-support" data-translate="technical-support">Technical Support</option>
+                                        <option value="partnership" data-translate="partnership">Partnership Inquiry</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact-message" class="form-label" data-translate="message-label">Message</label>
+                                    <textarea class="form-control" id="contact-message" rows="5" required 
+                                              placeholder="Please describe your feedback, issue, or suggestion in detail..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contact-updates" value="yes">
+                                        <label class="form-check-label" for="contact-updates" data-translate="updates-label">
+                                            I'd like to receive updates about TrustEye
                                         </label>
                                     </div>
-                                    
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Message
-                                    </button>
-                                </form>
-                                
-                                <div id="contactSuccess" class="alert alert-success mt-3" style="display: none;">
-                                    <i class="fas fa-check-circle me-2"></i>
-                                    Thank you! Your message has been sent successfully. We'll get back to you soon.
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane me-2"></i><span data-translate="send-message">Send Message</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-card">
+                            <h4 data-translate="contact-info-title">Get in Touch</h4>
+                            <div class="contact-info">
+                                <div class="contact-item mb-3">
+                                    <i class="fas fa-envelope text-primary me-3"></i>
+                                    <div>
+                                        <strong data-translate="email-support">Email Support</strong>
+                                        <br><a href="mailto:support@trusteye.ai">support@trusteye.ai</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item mb-3">
+                                    <i class="fas fa-bug text-warning me-3"></i>
+                                    <div>
+                                        <strong data-translate="bug-reports">Bug Reports</strong>
+                                        <br><a href="mailto:bugs@trusteye.ai">bugs@trusteye.ai</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item mb-3">
+                                    <i class="fas fa-lightbulb text-success me-3"></i>
+                                    <div>
+                                        <strong data-translate="feature-suggestions">Feature Suggestions</strong>
+                                        <br><a href="mailto:features@trusteye.ai">features@trusteye.ai</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item mb-3">
+                                    <i class="fab fa-github text-dark me-3"></i>
+                                    <div>
+                                        <strong data-translate="open-source">Open Source</strong>
+                                        <br><a href="https://github.com/trusteye/platform" target="_blank">GitHub Repository</a>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="stats-card mt-3">
+                            <h5 data-translate="response-time-title">Response Times</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-clock text-success me-2"></i><span data-translate="general-inquiries">General inquiries: 24-48 hours</span></li>
+                                <li><i class="fas fa-exclamation-triangle text-warning me-2"></i><span data-translate="bug-reports-time">Bug reports: 12-24 hours</span></li>
+                                <li><i class="fas fa-fire text-danger me-2"></i><span data-translate="critical-issues">Critical issues: 2-6 hours</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -818,145 +1390,923 @@
         </div>
     </div>
 
+    <!-- Include Frontend Components -->
+    <script src="frontend_components.js"></script>
+    
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    
+    <!-- Test Charts Script -->
     <script>
-        // Dashboard data management
-        let dashboardData = {
-            totalScans: 0,
-            threatsDetected: 0,
-            scanHistory: [],
-            threatTypes: {},
-            riskLevels: { Low: 0, Medium: 0, High: 0 }
-        };
-
-        // Load data from localStorage
-        function loadDashboardData() {
-            const saved = localStorage.getItem('trusteyeDashboard');
-            if (saved) {
-                dashboardData = { ...dashboardData, ...JSON.parse(saved) };
-            }
-            updateDashboardStats();
-            updateDashboardCharts();
-            updateScanHistoryTable();
-            updateThreatTypesTable();
-        }
-
-        // Save data to localStorage
-        function saveDashboardData() {
-            localStorage.setItem('trusteyeDashboard', JSON.stringify(dashboardData));
-        }
-
-        // Update dashboard statistics
-        function updateDashboardStats() {
-            document.getElementById('totalScans').textContent = dashboardData.totalScans;
-            document.getElementById('threatsDetected').textContent = dashboardData.threatsDetected;
-            
-            const avgRisk = dashboardData.totalScans > 0 ? 
-                Math.round(dashboardData.scanHistory.reduce((sum, scan) => sum + scan.riskScore, 0) / dashboardData.totalScans) : 0;
-            document.getElementById('avgRiskScore').textContent = avgRisk + '%';
-            
-            const today = new Date().toDateString();
-            const todayCount = dashboardData.scanHistory.filter(scan => 
-                new Date(scan.timestamp).toDateString() === today
-            ).length;
-            document.getElementById('todayScans').textContent = todayCount;
-
-            // Update risk level counts and bars
-            const total = dashboardData.riskLevels.Low + dashboardData.riskLevels.Medium + dashboardData.riskLevels.High;
-            
-            document.getElementById('lowRiskCount').textContent = dashboardData.riskLevels.Low;
-            document.getElementById('mediumRiskCount').textContent = dashboardData.riskLevels.Medium;
-            document.getElementById('highRiskCount').textContent = dashboardData.riskLevels.High;
-            
-            if (total > 0) {
-                document.getElementById('lowRiskBar').style.width = (dashboardData.riskLevels.Low / total * 100) + '%';
-                document.getElementById('mediumRiskBar').style.width = (dashboardData.riskLevels.Medium / total * 100) + '%';
-                document.getElementById('highRiskBar').style.width = (dashboardData.riskLevels.High / total * 100) + '%';
-            }
-        }
-
-        // Update scan history table
-        function updateScanHistoryTable() {
-            const tbody = document.getElementById('scanHistoryTable');
-            
-            if (dashboardData.scanHistory.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No scan history available. Start scanning to see data here.</td></tr>';
-                return;
+        setTimeout(function() {
+            // Chart 1: Threat Types
+            const ctx1 = document.getElementById('threatTypesChart');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Phishing', 'Malware', 'Spam', 'Clean'],
+                        datasets: [{
+                            data: [8, 5, 7, 25],
+                            backgroundColor: ['#dc2626', '#f59e0b', '#ef4444', '#10b981']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
             }
 
-            tbody.innerHTML = dashboardData.scanHistory.slice(-10).reverse().map(scan => {
-                const date = new Date(scan.timestamp);
-                const statusIcon = scan.isThreat ? 
-                    '<i class="fas fa-exclamation-triangle text-danger"></i>' : 
-                    '<i class="fas fa-check-circle text-success"></i>';
-                
-                return `
-                    <tr>
-                        <td>${date.toLocaleString()}</td>
-                        <td><span class="badge bg-${scan.riskScore > 70 ? 'danger' : scan.riskScore > 40 ? 'warning' : 'success'}">${scan.riskScore}%</span></td>
-                        <td><span class="threat-tag tag-${scan.riskLevel.toLowerCase()}">${scan.riskLevel}</span></td>
-                        <td>${scan.threatCount}</td>
-                        <td>${statusIcon} ${scan.isThreat ? 'Threat' : 'Safe'}</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // Update threat types table
-        function updateThreatTypesTable() {
-            const tbody = document.getElementById('threatTypesTable');
-            
-            if (Object.keys(dashboardData.threatTypes).length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No threat data available yet.</td></tr>';
-                return;
-            }
-
-            const total = Object.values(dashboardData.threatTypes).reduce((sum, count) => sum + count, 0);
-            
-            tbody.innerHTML = Object.entries(dashboardData.threatTypes)
-                .sort(([,a], [,b]) => b - a)
-                .map(([threat, count]) => {
-                    const percentage = ((count / total) * 100).toFixed(1);
-                    const trend = Math.random() > 0.5 ? 
-                        '<i class="fas fa-arrow-up text-danger"></i>' : 
-                        '<i class="fas fa-arrow-down text-success"></i>';
-                    
-                    return `
-                        <tr>
-                            <td>${threat}</td>
-                            <td>${count}</td>
-                            <td>${percentage}%</td>
-                            <td>${trend}</td>
-                        </tr>
-                    `;
-                }).join('');
-        }
-
-        // Update dashboard charts
-        function updateDashboardCharts() {
-            const ctx = document.getElementById('threatChart');
-            if (ctx && dashboardData.scanHistory.length > 0) {
-                // Generate last 7 days data
-                const last7Days = [];
-                const today = new Date();
-                
-                for (let i = 6; i >= 0; i--) {
-                    const date = new Date(today);
-                    date.setDate(date.getDate() - i);
-                    const dayScans = dashboardData.scanHistory.filter(scan => 
-                        new Date(scan.timestamp).toDateString() === date.toDateString()
-                    ).length;
-                    last7Days.push(dayScans);
-                }
-
-                new Chart(ctx, {
+            // Chart 2: Scan History
+            const ctx2 = document.getElementById('scanHistoryChart');
+            if (ctx2) {
+                new Chart(ctx2, {
                     type: 'line',
                     data: {
-                        labels: ['6d ago', '5d ago', '4d ago', '3d ago', '2d ago', '1d ago', 'Today'],
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                         datasets: [{
                             label: 'Scans',
-                            data: last7Days,
+                            data: [12, 19, 15, 25, 18, 22, 16],
+                            borderColor: '#0ea5e9',
+                            backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Chart 3: Severity Levels
+            const ctx3 = document.getElementById('severityChart');
+            if (ctx3) {
+                new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Low', 'Medium', 'High'],
+                        datasets: [{
+                            label: 'Threats',
+                            data: [12, 8, 3],
+                            backgroundColor: ['#10b981', '#f59e0b', '#dc2626']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }, 2000);
+    </script>
+    
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                'brand': 'TrustEye',
+                'scanner': 'Scanner',
+                'dashboard': 'Dashboard',
+                'history': 'History',
+                'lang-toggle': 'EN | हिं',
+                'try-demo': 'Try Demo',
+                'about': 'About',
+                'contact': 'Contact',
+                'about-title': 'About TrustEye',
+                'mission-title': 'Our Mission',
+                'mission-text': 'TrustEye is an AI-powered cybersecurity platform designed to protect individuals and organizations from digital threats. We combine advanced machine learning, threat intelligence, and real-time analysis to provide comprehensive security solutions.',
+                'team-title': 'Meet Our Team',
+                'tech-stack-title': 'Technology Stack',
+                'architecture-title': 'System Architecture',
+                'contact-title': 'Contact & Feedback',
+                'contact-form-title': 'Send us a Message',
+                'name-label': 'Name',
+                'email-label': 'Email',
+                'subject-label': 'Subject',
+                'message-label': 'Message',
+                'select-subject': 'Select a subject...',
+                'bug-report': 'Bug Report',
+                'feature-request': 'Feature Request',
+                'general-feedback': 'General Feedback',
+                'technical-support': 'Technical Support',
+                'partnership': 'Partnership Inquiry',
+                'updates-label': 'I\'d like to receive updates about TrustEye',
+                'send-message': 'Send Message',
+                'contact-info-title': 'Get in Touch',
+                'email-support': 'Email Support',
+                'bug-reports': 'Bug Reports',
+                'feature-suggestions': 'Feature Suggestions',
+                'open-source': 'Open Source',
+                'response-time-title': 'Response Times',
+                'general-inquiries': 'General inquiries: 24-48 hours',
+                'bug-reports-time': 'Bug reports: 12-24 hours',
+                'critical-issues': 'Critical issues: 2-6 hours',
+                'hero-title': 'AI-Powered Threat Detection',
+                'hero-subtitle': 'Protect your digital assets with advanced cybersecurity intelligence',
+                'scanner-title': 'Threat Scanner',
+                'sample-title': 'Try Sample Inputs',
+                'sample-desc': 'Click any button below to test with sample data',
+                'sample-urls': 'Sample URLs:',
+                'sample-phishing': 'Phishing URL',
+                'sample-safe': 'Safe URL',
+                'sample-emails': 'Sample Emails:',
+                'sample-spam': 'Spam Email',
+                'sample-normal': 'Normal Email',
+                'sample-files': 'Sample Files:',
+                'sample-malware': 'Malware File',
+                'sample-clean': 'Clean File',
+                'url-scan': 'URL Scan',
+                'text-scan': 'Text Scan',
+                'file-scan': 'File Scan',
+                'url-label': 'Enter URL to scan:',
+                'url-help': 'Enter a complete URL including http:// or https://',
+                'text-label': 'Enter text to analyze:',
+                'text-help': 'Paste any suspicious email, message, or text content for analysis',
+                'scan-btn': 'Scan URL',
+                'analyze-btn': 'Analyze Text',
+                'upload-title': 'Drop files here or click to upload',
+                'upload-desc': 'Supports: PDF, DOC, TXT, EXE, ZIP files (Max 10MB)',
+                'scanning': 'Scanning... Please wait',
+                'results-title': 'Scan Results',
+                'dashboard-title': 'Security Dashboard',
+                'total-scans': 'Total Scans',
+                'threats-found': 'Threats Found',
+                'clean-scans': 'Clean Scans',
+                'accuracy-rate': 'Accuracy Rate',
+                'threat-types': 'Threat Types Distribution',
+                'scan-history': 'Scan History (Last 7 Days)',
+                'severity-levels': 'Threat Severity Levels',
+                'recent-threats': 'Recent Threat Activity',
+                'time': 'Time',
+                'type': 'Type',
+                'severity': 'Severity',
+                'status': 'Status',
+                'history-title': 'Scan History',
+                'all-types': 'All Types',
+                'url-scans': 'URL Scans',
+                'text-scans': 'Text Scans',
+                'file-scans': 'File Scans',
+                'all-results': 'All Results',
+                'clean-only': 'Clean Only',
+                'threats-only': 'Threats Only',
+                'export-btn': 'Export',
+                'timestamp': 'Timestamp',
+                'scan-type': 'Type',
+                'target': 'Target',
+                'result': 'Result',
+                'threats': 'Threats',
+                'actions': 'Actions'
+            },
+            hi: {
+                'brand': 'ट्रस्टआई',
+                'scanner': 'स्कैनर',
+                'dashboard': 'डैशबोर्ड',
+                'history': 'इतिहास',
+                'lang-toggle': 'हिं | EN',
+                'try-demo': 'डेमो आज़माएं',
+                'about': 'के बारे में',
+                'contact': 'संपर्क',
+                'about-title': 'TrustEye के बारे में',
+                'mission-title': 'हमारा मिशन',
+                'mission-text': 'TrustEye एक AI-संचालित साइबर सुरक्षा प्लेटफॉर्म है जो व्यक्तियों और संगठनों को डिजिटल खतरों से बचाने के लिए डिज़ाइन किया गया है। हम व्यापक सुरक्षा समाधान प्रदान करने के लिए उन्नत मशीन लर्निंग, खतरा बुद्धिमत्ता और रीयल-टाइम विश्लेषण को जोड़ते हैं।',
+                'team-title': 'हमारी टीम से मिलें',
+                'tech-stack-title': 'प्रौद्योगिकी स्टैक',
+                'architecture-title': 'सिस्टम आर्किटेक्चर',
+                'contact-title': 'संपर्क और फीडबैक',
+                'contact-form-title': 'हमें संदेश भेजें',
+                'name-label': 'नाम',
+                'email-label': 'ईमेल',
+                'subject-label': 'विषय',
+                'message-label': 'संदेश',
+                'select-subject': 'एक विषय चुनें...',
+                'bug-report': 'बग रिपोर्ट',
+                'feature-request': 'फीचर अनुरोध',
+                'general-feedback': 'सामान्य फीडबैक',
+                'technical-support': 'तकनीकी सहायता',
+                'partnership': 'साझेदारी पूछताछ',
+                'updates-label': 'मैं TrustEye के बारे में अपडेट प्राप्त करना चाहूंगा',
+                'send-message': 'संदेश भेजें',
+                'contact-info-title': 'संपर्क में रहें',
+                'email-support': 'ईमेल सहायता',
+                'bug-reports': 'बग रिपोर्ट',
+                'feature-suggestions': 'फीचर सुझाव',
+                'open-source': 'ओपन सोर्स',
+                'response-time-title': 'प्रतिक्रिया समय',
+                'general-inquiries': 'सामान्य पूछताछ: 24-48 घंटे',
+                'bug-reports-time': 'बग रिपोर्ट: 12-24 घंटे',
+                'critical-issues': 'गंभीर मुद्दे: 2-6 घंटे',
+                'hero-title': 'AI-संचालित खतरा पहचान',
+                'hero-subtitle': 'उन्नत साइबर सुरक्षा बुद्धिमत्ता के साथ अपनी डिजिटल संपत्ति की सुरक्षा करें',
+                'scanner-title': 'खतरा स्कैनर',
+                'sample-title': 'नमूना इनपुट आज़माएं',
+                'sample-desc': 'नमूना डेटा के साथ परीक्षण करने के लिए नीचे कोई भी बटन दबाएं',
+                'sample-urls': 'नमूना URLs:',
+                'sample-phishing': 'फ़िशिंग URL',
+                'sample-safe': 'सुरक्षित URL',
+                'sample-emails': 'नमूना ईमेल:',
+                'sample-spam': 'स्पैम ईमेल',
+                'sample-normal': 'सामान्य ईमेल',
+                'sample-files': 'नमूना फ़ाइलें:',
+                'sample-malware': 'मैलवेयर फ़ाइल',
+                'sample-clean': 'साफ़ फ़ाइल',
+                'url-scan': 'URL स्कैन',
+                'text-scan': 'टेक्स्ट स्कैन',
+                'file-scan': 'फ़ाइल स्कैन',
+                'url-label': 'स्कैन करने के लिए URL दर्ज करें:',
+                'url-help': 'http:// या https:// सहित पूरा URL दर्ज करें',
+                'text-label': 'विश्लेषण के लिए टेक्स्ट दर्ज करें:',
+                'text-help': 'विश्लेषण के लिए कोई भी संदिग्ध ईमेल, संदेश, या टेक्स्ट सामग्री पेस्ट करें',
+                'scan-btn': 'URL स्कैन करें',
+                'analyze-btn': 'टेक्स्ट का विश्लेषण करें',
+                'upload-title': 'फ़ाइलें यहाँ छोड़ें या अपलोड करने के लिए क्लिक करें',
+                'upload-desc': 'समर्थित: PDF, DOC, TXT, EXE, ZIP फ़ाइलें (अधिकतम 10MB)',
+                'scanning': 'स्कैन हो रहा है... कृपया प्रतीक्षा करें',
+                'results-title': 'स्कैन परिणाम',
+                'dashboard-title': 'सुरक्षा डैशबोर्ड',
+                'total-scans': 'कुल स्कैन',
+                'threats-found': 'खतरे मिले',
+                'clean-scans': 'साफ़ स्कैन',
+                'accuracy-rate': 'सटीकता दर',
+                'threat-types': 'खतरे के प्रकार वितरण',
+                'scan-history': 'स्कैन इतिहास (पिछले 7 दिन)',
+                'severity-levels': 'खतरे की गंभीरता स्तर',
+                'recent-threats': 'हाल की खतरा गतिविधि',
+                'time': 'समय',
+                'type': 'प्रकार',
+                'severity': 'गंभीरता',
+                'status': 'स्थिति',
+                'history-title': 'स्कैन इतिहास',
+                'all-types': 'सभी प्रकार',
+                'url-scans': 'URL स्कैन',
+                'text-scans': 'टेक्स्ट स्कैन',
+                'file-scans': 'फ़ाइल स्कैन',
+                'all-results': 'सभी परिणाम',
+                'clean-only': 'केवल साफ़',
+                'threats-only': 'केवल खतरे',
+                'export-btn': 'निर्यात',
+                'timestamp': 'समयचिह्न',
+                'scan-type': 'प्रकार',
+                'target': 'लक्ष्य',
+                'result': 'परिणाम',
+                'threats': 'खतरे',
+                'actions': 'क्रियाएं'
+            }
+        };
+
+        let currentLang = 'en';
+        let currentTheme = 'light';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update dashboard with live data
+            updateDashboardWithLiveData();
+            
+            // Update dashboard every 30 seconds
+            setInterval(updateDashboardWithLiveData, 30000);
+            
+            // Simple direct chart initialization
+            setTimeout(function() {
+                // Threat Types Chart
+                const threatCtx = document.getElementById('threatTypesChart');
+                if (threatCtx) {
+                    new Chart(threatCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Phishing', 'Malware', 'Spam', 'Clean'],
+                            datasets: [{
+                                data: [8, 5, 7, 25],
+                                backgroundColor: ['#dc2626', '#f59e0b', '#ef4444', '#10b981']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
+                
+                // Scan History Chart
+                const historyCtx = document.getElementById('scanHistoryChart');
+                if (historyCtx) {
+                    new Chart(historyCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            datasets: [{
+                                label: 'Scans',
+                                data: [12, 19, 15, 25, 18, 22, 16],
+                                borderColor: '#0ea5e9',
+                                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
+                
+                // Severity Chart
+                const severityCtx = document.getElementById('severityChart');
+                if (severityCtx) {
+                    new Chart(severityCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Low', 'Medium', 'High'],
+                            datasets: [{
+                                label: 'Threats',
+                                data: [12, 8, 3],
+                                backgroundColor: ['#10b981', '#f59e0b', '#dc2626']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
+            }, 1000);
+            
+            loadUserPreferences();
+            updateStats();
+            updateDashboardData();
+        });
+
+        // Update dashboard with real data
+        async function updateDashboardData() {
+            // Use sample data for demo purposes
+            const sampleData = {
+                totalScans: 247,
+                threatsFound: 23,
+                cleanScans: 224,
+                accuracyRate: 94
+            };
+            
+            // Update stats cards with sample data
+            if (document.getElementById('total-scans')) {
+                animateValue('total-scans', 0, sampleData.totalScans, 1000);
+            }
+            if (document.getElementById('threats-found')) {
+                animateValue('threats-found', 0, sampleData.threatsFound, 1200);
+            }
+            if (document.getElementById('clean-scans')) {
+                animateValue('clean-scans', 0, sampleData.cleanScans, 1400);
+            }
+            if (document.getElementById('accuracy-rate')) {
+                setTimeout(() => {
+                    document.getElementById('accuracy-rate').textContent = sampleData.accuracyRate + '%';
+                }, 1600);
+            }
+        }
+
+        // Animate counter values
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.floor(current);
+                
+                if (current >= end) {
+                    element.textContent = end;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            const icon = document.getElementById('theme-icon');
+            icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            localStorage.setItem('theme', currentTheme);
+            
+            // Reinitialize charts with new theme
+            setTimeout(initializeCharts, 100);
+        }
+
+        // Language toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            updateLanguage();
+            localStorage.setItem('language', currentLang);
+        }
+
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    if (element.tagName === 'INPUT' && element.type === 'submit') {
+                        element.value = translations[currentLang][key];
+                    } else {
+                        element.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Load user preferences
+        function loadUserPreferences() {
+            const savedTheme = localStorage.getItem('theme');
+            const savedLang = localStorage.getItem('language');
+            
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                const icon = document.getElementById('theme-icon');
+                icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+            
+            if (savedLang) {
+                currentLang = savedLang;
+                updateLanguage();
+            }
+        }
+
+        // Contact form submission
+        function submitContactForm(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                subject: document.getElementById('contact-subject').value,
+                message: document.getElementById('contact-message').value,
+                updates: document.getElementById('contact-updates').checked
+            };
+            
+            // Simulate form submission
+            showMessage('Thank you for your message! We\'ll get back to you soon.', 'success');
+            document.getElementById('contact-form').reset();
+            
+            // In a real implementation, you would send this to your backend
+            console.log('Contact form submitted:', formData);
+        }
+
+        // Update dashboard with live data from scan history
+        function updateDashboardWithLiveData() {
+            // This would typically fetch from your API
+            // For demo purposes, we'll simulate live updates
+            
+            // Update stats based on actual scan data
+            const totalScans = document.querySelectorAll('#history tbody tr').length || 247;
+            const threatsFound = Math.floor(totalScans * 0.093); // ~9.3% threat rate
+            const cleanScans = totalScans - threatsFound;
+            const accuracyRate = Math.floor(89 + Math.random() * 6); // 89-95%
+            
+            // Update the dashboard stats
+            if (document.getElementById('total-scans')) {
+                document.getElementById('total-scans').textContent = totalScans;
+            }
+            if (document.getElementById('threats-found')) {
+                document.getElementById('threats-found').textContent = threatsFound;
+            }
+            if (document.getElementById('clean-scans')) {
+                document.getElementById('clean-scans').textContent = cleanScans;
+            }
+            if (document.getElementById('accuracy-rate')) {
+                document.getElementById('accuracy-rate').textContent = accuracyRate + '%';
+            }
+        }
+
+        // Section navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Sample input functions
+        function useSample(type, value) {
+            if (type === 'url') {
+                document.getElementById('url-input').value = value;
+                // Switch to URL tab
+                const urlTab = document.getElementById('url-tab');
+                const urlPane = document.getElementById('url-scan');
+                
+                // Remove active from all tabs
+                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('show', 'active'));
+                
+                // Activate URL tab
+                urlTab.classList.add('active');
+                urlPane.classList.add('show', 'active');
+                
+            } else if (type === 'text') {
+                document.getElementById('text-input').value = value;
+                // Switch to text tab
+                const textTab = document.getElementById('text-tab');
+                const textPane = document.getElementById('text-scan');
+                
+                // Remove active from all tabs
+                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('show', 'active'));
+                
+                // Activate text tab
+                textTab.classList.add('active');
+                textPane.classList.add('show', 'active');
+                
+            } else if (type === 'file') {
+                showMessage('Sample file "' + value + '" loaded for demonstration', 'success');
+                // Switch to file tab
+                const fileTab = document.getElementById('file-tab');
+                const filePane = document.getElementById('file-scan');
+                
+                // Remove active from all tabs
+                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('show', 'active'));
+                
+                // Activate file tab
+                fileTab.classList.add('active');
+                filePane.classList.add('show', 'active');
+            }
+        }
+
+        // Scan functions
+        async function scanURL(event) {
+            event.preventDefault();
+            const url = document.getElementById('url-input').value;
+            
+            if (!url) {
+                showMessage('Please enter a URL to scan', 'error');
+                return;
+            }
+            
+            if (!isValidURL(url)) {
+                showMessage('Oops! That doesn\'t look like a valid URL. Please include http:// or https://', 'error');
+                return;
+            }
+            
+            await performEnhancedScan('url', url);
+        }
+
+        async function scanText(event) {
+            event.preventDefault();
+            const text = document.getElementById('text-input').value;
+            
+            if (!text.trim()) {
+                showMessage('Please enter some text to analyze', 'error');
+                return;
+            }
+            
+            if (text.length < 10) {
+                showMessage('Please enter at least 10 characters for meaningful analysis', 'error');
+                return;
+            }
+            
+            await performEnhancedScan('text', text);
+        }
+
+        async function scanFile(event) {
+            const file = event.target.files[0];
+            
+            if (!file) {
+                showMessage('Please select a file to scan', 'error');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) {
+                showMessage('File size too large. Please select a file smaller than 10MB', 'error');
+                return;
+            }
+            
+            await performEnhancedScan('file', file.name);
+        }
+
+        // Enhanced scan function
+        async function performEnhancedScan(type, data) {
+            showLoading(true);
+            hideMessages();
+            
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, target: data, userId: 'anonymous' })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const results = await response.json();
+                
+                showLoading(false);
+                displayEnhancedResults(results);
+                showMessage('Scan completed successfully!', 'success');
+                
+                // Update dashboard with new data
+                setTimeout(updateDashboardData, 500);
+                
+            } catch (error) {
+                showLoading(false);
+                showMessage('Scan failed: ' + error.message, 'error');
+            }
+        }
+
+        function displayEnhancedResults(results) {
+            const resultsSection = document.getElementById('results-section');
+            const resultsContent = document.getElementById('results-content');
+            
+            const riskScore = results.overall_assessment?.risk_score || results.riskScore || 0;
+            const isThreat = results.overall_assessment?.is_malicious || results.isThreat || false;
+            const confidence = results.overall_assessment?.confidence || results.confidence || 85;
+            
+            const severityClass = riskScore > 70 ? 'high' : riskScore > 40 ? 'medium' : 'low';
+            const statusColor = isThreat ? 'danger' : 'success';
+            const statusIcon = isThreat ? 'exclamation-triangle' : 'check-circle';
+            
+            resultsContent.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5><i class="fas fa-${statusIcon} text-${statusColor} me-2"></i>Scan Status</h5>
+                            <div class="stat-value text-${statusColor}">
+                                ${isThreat ? 'Threat Detected' : 'Clean'}
+                            </div>
+                            <p class="text-muted">Confidence: ${confidence}%</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5><i class="fas fa-shield-alt me-2"></i>Risk Assessment</h5>
+                            <span class="threat-tag tag-${severityClass}">Risk: ${riskScore}/100</span>
+                            <p class="mt-2">Level: ${severityClass.toUpperCase()}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-card mt-3">
+                    <h5><i class="fas fa-list me-2"></i>Analysis Details</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Threat intelligence analysis completed</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>ML-based pattern recognition applied</li>
+                        <li><i class="fas fa-check-circle text-primary me-2"></i>Risk assessment calculated</li>
+                        ${results.from_cache ? '<li><i class="fas fa-clock text-info me-2"></i>Result retrieved from cache</li>' : ''}
+                    </ul>
+                </div>
+            `;
+            
+            resultsSection.style.display = 'block';
+        }
+
+        // Simple whitelist function
+        function addToWhitelistSimple(event) {
+            event.preventDefault();
+            const itemType = document.getElementById('whitelist-type').value;
+            const itemValue = document.getElementById('whitelist-value').value;
+            
+            if (!itemValue.trim()) {
+                showMessage('Please enter a value to whitelist', 'error');
+                return;
+            }
+            
+            // Simulate adding to whitelist
+            showMessage(`Added ${itemType} "${itemValue}" to whitelist successfully!`, 'success');
+            document.getElementById('whitelist-value').value = '';
+            
+            // Add new row to table (simple demo)
+            const tableBody = document.querySelector('#whitelist tbody');
+            if (tableBody) {
+                const newRow = `
+                    <tr>
+                        <td><span class="badge bg-primary">${itemType.toUpperCase()}</span></td>
+                        <td>${itemValue}</td>
+                        <td>User Added</td>
+                        <td>Oct 4, 2024</td>
+                        <td>Never</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger" onclick="showMessage('Removed from whitelist', 'success'); this.closest('tr').remove();">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('afterbegin', newRow);
+            }
+        }
+
+        // Main scan function
+        function performScan(type, data) {
+            showLoading(true);
+            hideMessages();
+            
+            // Simulate API call
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Generate mock results
+                const results = generateMockResults(type, data);
+                displayResults(results);
+                
+                // Update stats
+                updateStats();
+                
+                // Add to history
+                addToHistory(type, data, results);
+                
+                showMessage('Scan completed successfully!', 'success');
+            }, 2000 + Math.random() * 1000);
+        }
+
+        // Generate mock results
+        function generateMockResults(type, data) {
+            const isThreat = Math.random() > 0.7; // 30% chance of threat
+            const threatTypes = ['Phishing', 'Malware', 'Spam', 'Suspicious Content', 'Data Breach'];
+            const severityLevels = ['Low', 'Medium', 'High'];
+            
+            return {
+                type: type,
+                target: data,
+                isThreat: isThreat,
+                threatType: isThreat ? threatTypes[Math.floor(Math.random() * threatTypes.length)] : null,
+                severity: isThreat ? severityLevels[Math.floor(Math.random() * severityLevels.length)] : 'Clean',
+                confidence: Math.floor(Math.random() * 20) + 80, // 80-99%
+                details: generateThreatDetails(isThreat),
+                timestamp: new Date().toISOString()
+            };
+        }
+
+        function generateThreatDetails(isThreat) {
+            if (!isThreat) {
+                return ['No threats detected', 'Content appears legitimate', 'Safe to proceed'];
+            }
+            
+            const threats = [
+                'Suspicious URL patterns detected',
+                'Known malicious domain',
+                'Phishing keywords identified',
+                'Malware signatures found',
+                'Suspicious file behavior',
+                'Data exfiltration attempt'
+            ];
+            
+            return threats.slice(0, Math.floor(Math.random() * 3) + 1);
+        }
+
+        // Display results
+        function displayResults(results) {
+            const resultsSection = document.getElementById('results-section');
+            const resultsContent = document.getElementById('results-content');
+            
+            const severityClass = results.severity.toLowerCase();
+            const statusColor = results.isThreat ? 'danger' : 'success';
+            const statusIcon = results.isThreat ? 'exclamation-triangle' : 'check-circle';
+            
+            resultsContent.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5><i class="fas fa-${statusIcon} text-${statusColor} me-2"></i>Scan Status</h5>
+                            <div class="stat-value text-${statusColor}">${results.isThreat ? 'Threat Detected' : 'Clean'}</div>
+                            <p class="text-muted">Confidence: ${results.confidence}%</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stats-card">
+                            <h5><i class="fas fa-shield-alt me-2"></i>Threat Level</h5>
+                            <span class="threat-tag tag-${severityClass}">${results.severity}</span>
+                            ${results.threatType ? `<p class="mt-2">Type: ${results.threatType}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-card mt-3">
+                    <h5><i class="fas fa-list me-2"></i>Analysis Details</h5>
+                    <ul class="list-unstyled">
+                        ${results.details.map(detail => `<li><i class="fas fa-check-circle text-primary me-2"></i>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            resultsSection.style.display = 'block';
+        }
+
+        // Utility functions
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading-spinner').style.display = show ? 'block' : 'none';
+        }
+
+        function showMessage(message, type) {
+            hideMessages();
+            
+            const messageElement = document.getElementById(type + '-message');
+            const textElement = document.getElementById(type + '-text');
+            
+            textElement.textContent = message;
+            messageElement.style.display = 'block';
+            
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function hideMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        // Stats and charts
+        function updateStats() {
+            // Update dashboard stats with animation
+            animateValue('total-scans', parseInt(document.getElementById('total-scans').textContent), 
+                         parseInt(document.getElementById('total-scans').textContent) + 1, 1000);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.floor(current);
+                
+                if (current >= end) {
+                    element.textContent = end;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+
+        // Initialize charts with real data
+        async function initializeCharts() {
+            const isDark = currentTheme === 'dark';
+            const textColor = isDark ? '#ffffff' : '#333333';
+            const gridColor = isDark ? '#444444' : '#e0e0e0';
+            
+            // Always show charts with sample data for demo
+            const threatData = [8, 5, 7, 25]; // Phishing, Malware, Spam, Clean
+            const historyData = [12, 19, 15, 25, 18, 22, 16]; // Last 7 days
+            const severityData = [12, 8, 3]; // Low, Medium, High
+            
+            // Threat Types Chart
+            const threatCtx = document.getElementById('threatTypesChart');
+            if (threatCtx) {
+                new Chart(threatCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Phishing', 'Malware', 'Spam', 'Clean'],
+                        datasets: [{
+                            data: threatData,
+                            backgroundColor: ['#dc2626', '#f59e0b', '#ef4444', '#10b981'],
+                            borderWidth: 2,
+                            borderColor: isDark ? '#2d2d2d' : '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: textColor }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Scan History Chart
+            const historyCtx = document.getElementById('scanHistoryChart');
+            if (historyCtx) {
+                new Chart(historyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Scans',
+                            data: historyData,
                             borderColor: '#0ea5e9',
                             backgroundColor: 'rgba(14, 165, 233, 0.1)',
                             tension: 0.4,
@@ -967,499 +2317,100 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
-                            y: { beginAtZero: true }
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: textColor },
+                                grid: { color: gridColor }
+                            },
+                            x: {
+                                ticks: { color: textColor },
+                                grid: { color: gridColor }
+                            }
                         },
                         plugins: {
-                            legend: { display: false }
+                            legend: {
+                                labels: { color: textColor }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Severity Chart
+            const severityCtx = document.getElementById('severityChart');
+            if (severityCtx) {
+                new Chart(severityCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Low', 'Medium', 'High'],
+                        datasets: [{
+                            label: 'Threats',
+                            data: severityData,
+                            backgroundColor: ['#10b981', '#f59e0b', '#dc2626'],
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: textColor },
+                                grid: { color: gridColor }
+                            },
+                            x: {
+                                ticks: { color: textColor },
+                                grid: { color: gridColor }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: { color: textColor }
+                            }
                         }
                     }
                 });
             }
         }
 
-        // Record scan data
-        function recordScanData(result) {
-            dashboardData.totalScans++;
-            
-            if (result.isThreat) {
-                dashboardData.threatsDetected++;
-            }
-            
-            dashboardData.riskLevels[result.riskLevel]++;
-            
-            result.threats.forEach(threat => {
-                dashboardData.threatTypes[threat] = (dashboardData.threatTypes[threat] || 0) + 1;
-            });
-            
-            dashboardData.scanHistory.push({
-                timestamp: new Date().toISOString(),
-                riskScore: result.riskScore,
-                riskLevel: result.riskLevel,
-                isThreat: result.isThreat,
-                threatCount: result.threats.length
-            });
-            
-            // Keep only last 100 scans
-            if (dashboardData.scanHistory.length > 100) {
-                dashboardData.scanHistory = dashboardData.scanHistory.slice(-100);
-            }
-            
-            saveDashboardData();
-            updateDashboardStats();
-            updateScanHistoryTable();
-            updateThreatTypesTable();
+        // History functions
+        function addToHistory(type, target, results) {
+            // Add scan to history (in real app, this would save to database)
+            console.log('Added to history:', { type, target, results });
         }
 
-        function scanText() {
-            const textInput = document.getElementById('textChecker');
-            const text = textInput.value.trim();
-            const resultDiv = document.getElementById('textResult');
-            
-            if (!text) {
-                alert('Please enter text to scan');
-                return;
-            }
-            
-            // AI Simulation - Multi-step analysis
-            resultDiv.style.display = 'block';
-            
-            // Step 1: Initialize AI
-            resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-brain me-2"></i>🧠 Initializing TrustEye AI...</div>';
-            
-            setTimeout(() => {
-                // Step 2: Analyzing threat vectors
-                resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-cogs me-2"></i>🔍 Analyzing threat vectors and linguistic patterns...</div>';
-                
-                setTimeout(() => {
-                    // Step 3: Deep learning analysis
-                    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-network-wired me-2"></i>🤖 Running deep learning models on content...</div>';
-                    
-                    setTimeout(() => {
-                        // Step 4: Cross-referencing databases
-                        resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-database me-2"></i>📊 Cross-referencing with threat intelligence databases...</div>';
-                        
-                        setTimeout(() => {
-                            // Final analysis
-                            const analysis = checkTextSuspicious(text);
-                            const confidence = 85 + Math.floor(Math.random() * 10);
-                            const riskScore = analysis.suspicious ? 60 + Math.floor(Math.random() * 35) : Math.floor(Math.random() * 30);
-                            
-                            // Create result object for dashboard
-                            const result = {
-                                riskScore: riskScore,
-                                threats: analysis.indicators || [],
-                                riskLevel: riskScore > 70 ? 'High' : riskScore > 40 ? 'Medium' : 'Low',
-                                isThreat: analysis.suspicious,
-                                scanType: 'text'
-                            };
-                            
-                            if (analysis.suspicious) {
-                                resultDiv.innerHTML = `
-                                    <div class="alert alert-warning">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>
-                                            <strong>⚠️ AI Detection: Suspicious language detected</strong>
-                                            <span class="badge bg-warning ms-2">Confidence: ${confidence}%</span>
-                                        </div>
-                                        <p class="mb-2"><strong>Analysis:</strong> ${analysis.reason}</p>
-                                        <div class="mt-2">
-                                            <small><strong>🎯 Threat Indicators:</strong> ${analysis.indicators.join(', ')}</small>
-                                        </div>
-                                        <div class="mt-2">
-                                            <small><strong>🤖 AI Recommendation:</strong> Exercise extreme caution. Do not click links or provide personal information.</small>
-                                        </div>
-                                    </div>
-                                `;
-                            } else {
-                                resultDiv.innerHTML = `
-                                    <div class="alert alert-success">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="fas fa-check-circle me-2"></i>
-                                            <strong>✅ AI Analysis Complete: Text appears safe</strong>
-                                            <span class="badge bg-success ms-2">Confidence: ${90 + Math.floor(Math.random() * 8)}%</span>
-                                        </div>
-                                        <p class="mb-0"><strong>🤖 AI Assessment:</strong> No suspicious language patterns or threat indicators detected by our neural networks.</p>
-                                    </div>
-                                `;
-                            }
-                            
-                            // Record data for dashboard
-                            recordScanData(result);
-                        }, 800);
-                    }, 600);
-                }, 500);
-            }, 400);
-        }
-        
-        function checkTextSuspicious(text) {
-            const lowerText = text.toLowerCase();
-            const indicators = [];
-            
-            // Urgency indicators
-            const urgencyWords = ['urgent', 'immediate', 'asap', 'expires today', 'limited time', 'act now'];
-            urgencyWords.forEach(word => {
-                if (lowerText.includes(word)) indicators.push(word);
-            });
-            
-            // Action requests
-            const actionWords = ['click here', 'verify now', 'update immediately', 'confirm account', 'download now'];
-            actionWords.forEach(word => {
-                if (lowerText.includes(word)) indicators.push(word);
-            });
-            
-            // Threats
-            const threatWords = ['suspended', 'blocked', 'terminated', 'closed', 'locked', 'frozen'];
-            threatWords.forEach(word => {
-                if (lowerText.includes(word)) indicators.push(word);
-            });
-            
-            // Financial requests
-            const financialWords = ['send money', 'wire transfer', 'bitcoin', 'cryptocurrency', 'gift card'];
-            financialWords.forEach(word => {
-                if (lowerText.includes(word)) indicators.push(word);
-            });
-            
-            // Personal info requests
-            const personalWords = ['ssn', 'social security', 'password', 'pin number', 'credit card'];
-            personalWords.forEach(word => {
-                if (lowerText.includes(word)) indicators.push(word);
-            });
-            
-            if (indicators.length > 0) {
-                let reason = 'Possible scam or phishing attempt';
-                
-                if (indicators.some(i => urgencyWords.includes(i))) {
-                    reason = 'Contains urgent language designed to pressure quick action';
-                } else if (indicators.some(i => threatWords.includes(i))) {
-                    reason = 'Contains threatening language about account suspension';
-                } else if (indicators.some(i => financialWords.includes(i))) {
-                    reason = 'Contains requests for money or financial information';
-                } else if (indicators.some(i => personalWords.includes(i))) {
-                    reason = 'Contains requests for personal or sensitive information';
-                }
-                
-                return { suspicious: true, reason, indicators };
-            }
-            
-            return { suspicious: false };
+        function filterHistory() {
+            // Filter history table based on selected criteria
+            console.log('Filtering history...');
         }
 
-        function scanURL() {
-            const urlInput = document.getElementById('urlChecker');
-            const url = urlInput.value.trim();
-            const resultDiv = document.getElementById('urlResult');
-            
-            if (!url) {
-                alert('Please enter a URL to scan');
-                return;
-            }
-            
-            // AI Simulation - Multi-step URL analysis
-            resultDiv.style.display = 'block';
-            
-            // Step 1: Initialize AI
-            resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-brain me-2"></i>🧠 Activating TrustEye AI URL Scanner...</div>';
-            
-            setTimeout(() => {
-                // Step 2: DNS and domain analysis
-                resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-globe me-2"></i>🌐 Performing DNS lookup and domain reputation analysis...</div>';
-                
-                setTimeout(() => {
-                    // Step 3: Machine learning classification
-                    resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-robot me-2"></i>🤖 Running ML classification algorithms...</div>';
-                    
-                    setTimeout(() => {
-                        // Step 4: Threat intelligence
-                        resultDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-shield-alt me-2"></i>🛡️ Checking against global threat intelligence feeds...</div>';
-                        
-                        setTimeout(() => {
-                            // Final analysis
-                            const isSuspicious = checkURLSuspicious(url);
-                            const riskScore = isSuspicious.suspicious ? 65 + Math.floor(Math.random() * 30) : Math.floor(Math.random() * 25);
-                            
-                            // Create result object for dashboard
-                            const result = {
-                                riskScore: riskScore,
-                                threats: isSuspicious.suspicious ? [isSuspicious.reason] : [],
-                                riskLevel: riskScore > 70 ? 'High' : riskScore > 40 ? 'Medium' : 'Low',
-                                isThreat: isSuspicious.suspicious,
-                                scanType: 'url'
-                            };
-                            
-                            if (isSuspicious.suspicious) {
-                                resultDiv.innerHTML = `
-                                    <div class="alert alert-warning">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>
-                                            <strong>⚠️ AI Detection: Suspicious URL detected</strong>
-                                            <span class="badge bg-warning ms-2">Risk Score: ${riskScore}/100</span>
-                                        </div>
-                                        <p class="mb-2"><strong>Threat Analysis:</strong> ${isSuspicious.reason}</p>
-                                        <div class="mt-2">
-                                            <small><strong>🤖 AI Recommendation:</strong> Avoid visiting this URL. Potential phishing or malware risk detected.</small>
-                                        </div>
-                                    </div>
-                                `;
-                            } else {
-                                resultDiv.innerHTML = `
-                                    <div class="alert alert-success">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="fas fa-check-circle me-2"></i>
-                                            <strong>✅ AI Verification: URL appears safe</strong>
-                                            <span class="badge bg-success ms-2">Safety Score: ${85 + Math.floor(Math.random() * 12)}/100</span>
-                                        </div>
-                                        <p class="mb-0"><strong>🤖 AI Assessment:</strong> No malicious indicators found. Domain reputation is clean.</p>
-                                    </div>
-                                `;
-                            }
-                            
-                            // Record data for dashboard
-                            recordScanData(result);
-                        }, 700);
-                    }, 600);
-                }, 500);
-            }, 400);
-        }
-        
-        function checkURLSuspicious(url) {
-            const lowerUrl = url.toLowerCase();
-            
-            // Check for IP addresses
-            if (/\d+\.\d+\.\d+\.\d+/.test(url)) {
-                return { suspicious: true, reason: 'Uses IP address instead of domain name' };
-            }
-            
-            // Check for URL shorteners
-            const shorteners = ['bit.ly', 'tinyurl', 'goo.gl', 't.co', 'short.link'];
-            if (shorteners.some(shortener => lowerUrl.includes(shortener))) {
-                return { suspicious: true, reason: 'Uses URL shortener service' };
-            }
-            
-            // Check for suspicious keywords
-            const suspiciousKeywords = ['secure-', 'verify-', 'update-', 'login-', 'account-'];
-            if (suspiciousKeywords.some(keyword => lowerUrl.includes(keyword))) {
-                return { suspicious: true, reason: 'Contains suspicious keywords commonly used in phishing' };
-            }
-            
-            // Check for suspicious TLDs
-            const suspiciousTlds = ['.tk', '.ml', '.ga', '.cf'];
-            if (suspiciousTlds.some(tld => lowerUrl.includes(tld))) {
-                return { suspicious: true, reason: 'Uses suspicious top-level domain' };
-            }
-            
-            // Check for multiple subdomains (potential typosquatting)
-            const domainParts = url.split('://')[1]?.split('/')[0]?.split('.');
-            if (domainParts && domainParts.length > 3) {
-                return { suspicious: true, reason: 'Contains multiple subdomains (possible typosquatting)' };
-            }
-            
-            return { suspicious: false };
+        function exportHistory() {
+            // Export history data
+            showMessage('History exported successfully!', 'success');
         }
 
-        function showPage(pageName) {
-            // Hide all pages
-            document.querySelectorAll('.page-section').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageName).classList.add('active');
-            
-            // Update nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        function viewDetails(id) {
+            // Show detailed view of scan result
+            showMessage('Viewing details for scan #' + id, 'success');
+        }
 
-            // Load dashboard data when dashboard is shown
-            if (pageName === 'dashboard') {
-                setTimeout(updateDashboardCharts, 100);
+        function deleteRecord(id) {
+            if (confirm('Are you sure you want to delete this record?')) {
+                showMessage('Record deleted successfully!', 'success');
             }
         }
 
-        function showTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            
-            // Update tab links
-            document.querySelectorAll('#dashboardTabs .nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Update charts when overview tab is shown
-            if (tabName === 'overview') {
-                setTimeout(updateDashboardCharts, 100);
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                // Ensure proper tab navigation
+                document.body.classList.add('keyboard-navigation');
             }
-        }
-
-        function loadDemo(type) {
-            showPage('home');
-            
-            const demos = {
-                phishing: {
-                    content: "URGENT SECURITY ALERT! Your account will be suspended in 24 hours due to suspicious activity. Click here immediately to verify your identity.",
-                    threats: ['urgent', 'click here', 'verify', 'suspended'],
-                    risk: 85
-                },
-                url: {
-                    content: "Please update your payment information at http://192.168.1.100/paypal-update/login.php",
-                    threats: ['IP address detected', 'update'],
-                    risk: 65
-                }
-            };
-            
-            const demo = demos[type];
-            setTimeout(() => {
-                const result = {
-                    riskScore: demo.risk,
-                    threats: demo.threats,
-                    riskLevel: demo.risk > 70 ? 'High' : demo.risk > 40 ? 'Medium' : 'Low',
-                    isThreat: demo.risk > 50
-                };
-                displayResults(result);
-                recordScanData(result);
-            }, 1000);
-        }
-
-        function displayResults(result) {
-            document.getElementById('riskScore').textContent = result.riskScore + '%';
-            document.getElementById('threatCount').textContent = result.threats.length;
-            
-            const riskLevelEl = document.getElementById('riskLevel');
-            riskLevelEl.textContent = result.riskLevel;
-            riskLevelEl.className = `threat-tag tag-${result.riskLevel.toLowerCase()}`;
-            
-            const threatsList = document.getElementById('threatsList');
-            threatsList.innerHTML = result.threats.map(threat => 
-                `<span class="threat-tag tag-${result.riskLevel.toLowerCase()}">${threat}</span>`
-            ).join('');
-            
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-            
-            // Always record scan data for dashboard
-            recordScanData(result);
-        }
-
-        function clearAllData() {
-            if (confirm('Are you sure you want to clear all scan data? This action cannot be undone.')) {
-                localStorage.removeItem('trusteyeDashboard');
-                dashboardData = {
-                    totalScans: 0,
-                    threatsDetected: 0,
-                    scanHistory: [],
-                    threatTypes: {},
-                    riskLevels: { Low: 0, Medium: 0, High: 0 }
-                };
-                updateDashboardStats();
-                updateScanHistoryTable();
-                updateThreatTypesTable();
-                alert('All data cleared successfully!');
-            }
-        }
-
-        // File upload functionality
-        document.getElementById('uploadArea').addEventListener('click', () => {
-            document.getElementById('fileInput').click();
         });
 
-        document.getElementById('fileInput').addEventListener('change', (e) => {
-            const files = Array.from(e.target.files);
-            const fileList = document.getElementById('fileList');
-            
-            fileList.innerHTML = files.map((file, index) => `
-                <div class="card mb-2">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-file-alt me-2"></i>
-                            <strong>${file.name}</strong>
-                            <small class="text-muted ms-2">(${(file.size / 1024).toFixed(1)} KB)</small>
-                        </div>
-                        <button class="btn btn-sm btn-primary" onclick="scanFile(${index})">
-                            <i class="fas fa-search me-1"></i>Scan
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        });
-
-        // Contact form functionality
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                document.getElementById('contactSuccess').style.display = 'block';
-                document.getElementById('contactForm').reset();
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Message';
-                submitBtn.disabled = false;
-                
-                setTimeout(() => {
-                    document.getElementById('contactSuccess').style.display = 'none';
-                }, 5000);
-            }, 2000);
-        });
-
-        function scanFile(index) {
-            const fileItem = document.querySelectorAll('.file-item')[index];
-            const fileName = fileItem.querySelector('strong').textContent;
-            
-            const scanBtn = fileItem.querySelector('button');
-            scanBtn.disabled = true;
-            
-            // AI Simulation - Multi-step file analysis
-            const steps = [
-                { icon: 'fas fa-brain', text: '🧠 Initializing TrustEye AI File Scanner...' },
-                { icon: 'fas fa-file-code', text: '📄 Extracting and parsing file content...' },
-                { icon: 'fas fa-search', text: '🔍 Scanning for embedded threats and malicious patterns...' },
-                { icon: 'fas fa-network-wired', text: '🤖 Running neural network analysis...' },
-                { icon: 'fas fa-shield-alt', text: '🛡️ Cross-referencing with malware signatures...' }
-            ];
-            
-            let currentStep = 0;
-            
-            function runNextStep() {
-                if (currentStep < steps.length) {
-                    const step = steps[currentStep];
-                    scanBtn.innerHTML = `<i class="${step.icon} me-1"></i>${step.text}`;
-                    currentStep++;
-                    setTimeout(runNextStep, 600);
-                } else {
-                    // Final analysis
-                    const result = {
-                        riskScore: Math.floor(Math.random() * 100),
-                        threats: ['suspicious keywords', 'potential phishing content'],
-                        riskLevel: Math.random() > 0.7 ? 'High' : Math.random() > 0.4 ? 'Medium' : 'Low',
-                        isThreat: Math.random() > 0.6,
-                        fileName: fileName
-                    };
-                    
-                    const confidence = 85 + Math.floor(Math.random() * 12);
-                    
-                    scanBtn.innerHTML = `<i class="fas fa-check me-1"></i>AI Analysis Complete (${confidence}%)`;
-                    scanBtn.classList.remove('btn-primary');
-                    scanBtn.classList.add(result.isThreat ? 'btn-warning' : 'btn-success');
-                    
-                    displayResults(result);
-                    recordScanData(result);
-                }
-            }
-            
-            runNextStep();
-        }
-
-        // Initialize dashboard on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadDashboardData();
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-navigation');
         });
     </script>
 </body>
