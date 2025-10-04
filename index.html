@@ -119,12 +119,24 @@
                             <i class="fas fa-search mr-2"></i>Scan
                         </button>
                     </div>
-                    <div class="flex space-x-2 mt-2">
-                        <button onclick="loadSample('phishing')" class="text-xs px-3 py-1 bg-red-100 text-red-700 rounded-full hover:bg-red-200">
-                            Sample Phishing
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <button onclick="loadSample('phishing1')" class="text-xs px-3 py-1 bg-red-100 text-red-700 rounded-full hover:bg-red-200">
+                            Bank Phishing
                         </button>
-                        <button onclick="loadSample('safe')" class="text-xs px-3 py-1 bg-green-100 text-green-700 rounded-full hover:bg-green-200">
-                            Sample Safe
+                        <button onclick="loadSample('phishing2')" class="text-xs px-3 py-1 bg-red-100 text-red-700 rounded-full hover:bg-red-200">
+                            PayPal Scam
+                        </button>
+                        <button onclick="loadSample('phishing3')" class="text-xs px-3 py-1 bg-red-100 text-red-700 rounded-full hover:bg-red-200">
+                            Netflix Fake
+                        </button>
+                        <button onclick="loadSample('safe1')" class="text-xs px-3 py-1 bg-green-100 text-green-700 rounded-full hover:bg-green-200">
+                            Google Safe
+                        </button>
+                        <button onclick="loadSample('safe2')" class="text-xs px-3 py-1 bg-green-100 text-green-700 rounded-full hover:bg-green-200">
+                            GitHub Safe
+                        </button>
+                        <button onclick="loadSample('safe3')" class="text-xs px-3 py-1 bg-green-100 text-green-700 rounded-full hover:bg-green-200">
+                            Wikipedia Safe
                         </button>
                     </div>
                 </div>
@@ -350,11 +362,15 @@
         // Sample data
         function loadSample(type) {
             const urlInput = document.getElementById('urlInput');
-            if (type === 'phishing') {
-                urlInput.value = 'https://secure-bank-login.com/verify-account';
-            } else {
-                urlInput.value = 'https://google.com';
-            }
+            const samples = {
+                phishing1: 'https://secure-bank-login.com/verify-account',
+                phishing2: 'https://paypal-security-update.net/confirm',
+                phishing3: 'https://netflix-billing-update.org/payment',
+                safe1: 'https://google.com',
+                safe2: 'https://github.com',
+                safe3: 'https://wikipedia.org'
+            };
+            urlInput.value = samples[type] || samples.safe1;
         }
 
         // Scan functions
@@ -365,7 +381,7 @@
             showLoading();
             
             setTimeout(() => {
-                const isPhishing = url.includes('secure-bank') || url.includes('verify');
+                const isPhishing = url.includes('secure-bank') || url.includes('paypal-security') || url.includes('netflix-billing') || url.includes('verify') || url.includes('confirm') || url.includes('update');
                 showResult(isPhishing ? 'danger' : 'safe', 
                           isPhishing ? 'Phishing detected!' : 'URL appears safe',
                           isPhishing ? 'This URL shows signs of phishing activity.' : 'No threats detected.');
